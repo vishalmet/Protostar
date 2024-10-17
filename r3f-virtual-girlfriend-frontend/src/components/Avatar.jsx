@@ -113,17 +113,14 @@ export function Avatar(props) {
 
   const { message, onMessagePlayed, chat } = useChat();
 
-  const [lipsync, setLipsync] = useState();
+  const [audio, setAudio] = useState();
 
   useEffect(() => {
-    console.log(message);
     if (!message) {
       setAnimation("Idle");
       return;
     }
     setAnimation(message.animation);
-    setFacialExpression(message.facialExpression);
-    setLipsync(message.lipsync);
     const audio = new Audio("data:audio/mp3;base64," + message.audio);
     audio.play();
     setAudio(audio);
@@ -175,53 +172,21 @@ export function Avatar(props) {
   const [blink, setBlink] = useState(false);
   const [winkLeft, setWinkLeft] = useState(false);
   const [winkRight, setWinkRight] = useState(false);
-  const [facialExpression, setFacialExpression] = useState("");
-  const [audio, setAudio] = useState();
 
   useFrame(() => {
-    !setupMode &&
-      Object.keys(nodes.EyeLeft.morphTargetDictionary).forEach((key) => {
-        const mapping = facialExpressions[facialExpression];
-        if (key === "eyeBlinkLeft" || key === "eyeBlinkRight") {
-          return; // eyes wink/blink are handled separately
-        }
-        if (mapping && mapping[key]) {
-          lerpMorphTarget(key, mapping[key], 0.1);
-        } else {
-          lerpMorphTarget(key, 0, 0.1);
-        }
-      });
-
-    lerpMorphTarget("eyeBlinkLeft", blink || winkLeft ? 1 : 0, 0.5);
-    lerpMorphTarget("eyeBlinkRight", blink || winkRight ? 1 : 0, 0.5);
-
-    // LIPSYNC
-    if (setupMode) {
-      return;
-    }
-
-    const appliedMorphTargets = [];
-    if (message && lipsync) {
-      const currentAudioTime = audio.currentTime;
-      for (let i = 0; i < lipsync.mouthCues.length; i++) {
-        const mouthCue = lipsync.mouthCues[i];
-        if (
-          currentAudioTime >= mouthCue.start &&
-          currentAudioTime <= mouthCue.end
-        ) {
-          appliedMorphTargets.push(corresponding[mouthCue.value]);
-          lerpMorphTarget(corresponding[mouthCue.value], 1, 0.2);
-          break;
-        }
-      }
+    // Simulate random lip movements by randomly setting the mouth visemes
+    if (audio && !audio.paused) {
+      const randomViseme = Object.keys(corresponding)[Math.floor(Math.random() * Object.keys(corresponding).length)];
+      lerpMorphTarget(corresponding[randomViseme], Math.random(), 0.2);
     }
 
     Object.values(corresponding).forEach((value) => {
-      if (appliedMorphTargets.includes(value)) {
-        return;
-      }
-      lerpMorphTarget(value, 0, 0.1);
+      lerpMorphTarget(value, 0, 0.1); // Reset other morph targets
     });
+
+    // Random eye movements
+    lerpMorphTarget("eyeBlinkLeft", blink || winkLeft ? 1 : 0, 0.5);
+    lerpMorphTarget("eyeBlinkRight", blink || winkRight ? 1 : 0, 0.5);
   });
 
   useControls("FacialExpressions", {
@@ -239,56 +204,7 @@ export function Avatar(props) {
       options: animations.map((a) => a.name),
       onChange: (value) => setAnimation(value),
     },
-    facialExpression: {
-      options: Object.keys(facialExpressions),
-      onChange: (value) => setFacialExpression(value),
-    },
-    enableSetupMode: button(() => {
-      setupMode = true;
-    }),
-    disableSetupMode: button(() => {
-      setupMode = false;
-    }),
-    logMorphTargetValues: button(() => {
-      const emotionValues = {};
-      Object.keys(nodes.EyeLeft.morphTargetDictionary).forEach((key) => {
-        if (key === "eyeBlinkLeft" || key === "eyeBlinkRight") {
-          return; // eyes wink/blink are handled separately
-        }
-        const value =
-          nodes.EyeLeft.morphTargetInfluences[
-            nodes.EyeLeft.morphTargetDictionary[key]
-          ];
-        if (value > 0.01) {
-          emotionValues[key] = value;
-        }
-      });
-      console.log(JSON.stringify(emotionValues, null, 2));
-    }),
   });
-
-  const [, set] = useControls("MorphTarget", () =>
-    Object.assign(
-      {},
-      ...Object.keys(nodes.EyeLeft.morphTargetDictionary).map((key) => {
-        return {
-          [key]: {
-            label: key,
-            value: 0,
-            min: nodes.EyeLeft.morphTargetInfluences[
-              nodes.EyeLeft.morphTargetDictionary[key]
-            ],
-            max: 1,
-            onChange: (val) => {
-              if (setupMode) {
-                lerpMorphTarget(key, val, 1);
-              }
-            },
-          },
-        };
-      })
-    )
-  );
 
   useEffect(() => {
     let blinkTimeout;

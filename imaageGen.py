@@ -10,4 +10,4 @@ while True:
         print(f"🤖: Image shown.")
     except Exception as e:
         print(f"🤖: {e}")
-        
+
