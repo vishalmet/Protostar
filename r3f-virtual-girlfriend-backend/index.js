@@ -110,7 +110,7 @@ app.post("/chat", async (req, res) => {
           audio: await audioFileToBase64("audios/intro_0.mp3"), // Using MP3 file directly without conversion
           lipsync: generateRandomLipSync(), // Generating random lip sync data
           facialExpression: "smile",
-          animation: "Talking_1",
+          animation: "Talking_1", 
         },
         {
           text: "I missed you so much... Please don't go for so long!",
