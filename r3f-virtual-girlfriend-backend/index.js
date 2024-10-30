@@ -10,7 +10,11 @@ dotenv.config();
 
 const app = express();
 app.use(express.json());
-app.use(cors());
+app.use(cors({
+  origin: '*',  // This allows all origins to access the resources
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],  // You can specify which HTTP methods are allowed
+  allowedHeaders: ['Content-Type', 'Authorization']  // Specify which headers are allowed
+}));
 const port = 3000;
 
 // Phoneme to Viseme mapping for morph target influences
