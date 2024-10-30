@@ -157,7 +157,7 @@ app.post("/chat", async (req, res) => {
     res.status(500).send({ error: 'Failed to process the request' });
   }
 });
-
+ 
 // Helper function to convert audio files to base64 format
 const audioFileToBase64 = async (file) => {
   const data = await fs.readFile(file);
