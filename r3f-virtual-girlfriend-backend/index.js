@@ -126,7 +126,7 @@ app.post("/chat", async (req, res) => {
 
   try {
     // Call the local chatbot service
-    const chatbotResponse = await axios.post('https://protostar-examples.vercel.app/chat', { message: userMessage });
+    const chatbotResponse = await axios.post('https://virtual-gf-py.vercel.app/chat', { message: userMessage });
 
     let messages = chatbotResponse.data;  // Expecting direct array of messages as per the example you provided
 
