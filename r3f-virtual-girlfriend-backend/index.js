@@ -2,9 +2,9 @@ import cors from "cors";
 import dotenv from "dotenv";
 import gTTS from 'gtts';  // Import gTTS library for Text-to-Speech
 import express from "express";
-import { promises as fs } from "fs";
 import axios from 'axios';  // Axios to handle local chatbot API calls
 import * as THREE from "three"; // For morph target influences and interpolation
+import streamBuffers from 'stream-buffers';  // To handle the audio as a stream in memory
 
 dotenv.config();
 
@@ -30,13 +30,29 @@ const corresponding = {
   X: "viseme_PP",
 };
 
-// Function to generate speech using gTTS and save it as an MP3 file
-const generateSpeech = async (text, fileName) => {
+// Function to generate speech using gTTS and return it as a Base64 string (without writing to a file)
+const generateSpeech = async (text) => {
   const gtts = new gTTS(text, 'en');
   return new Promise((resolve, reject) => {
-    gtts.save(fileName, (err, result) => {
-      if (err) reject(err);
-      resolve(result);
+    const writableBuffer = new streamBuffers.WritableStreamBuffer({
+      initialSize: 1024,  // Start with 1KB buffer
+      incrementAmount: 1024,  // Grow buffer in 1KB increments if needed
+    });
+
+    gtts.stream().pipe(writableBuffer);  // Pipe the gTTS stream to buffer
+
+    writableBuffer.on('finish', () => {
+      const audioBuffer = writableBuffer.getContents();
+      if (audioBuffer) {
+        const base64Audio = audioBuffer.toString('base64');
+        resolve(base64Audio);
+      } else {
+        reject(new Error("Failed to convert speech to Base64"));
+      }
+    });
+
+    writableBuffer.on('error', (err) => {
+      reject(err);
     });
   });
 };
@@ -103,14 +119,14 @@ app.post("/chat", async (req, res) => {
       messages: [
         {
           text: "Hey dear... How was your day?",
-          audio: await audioFileToBase64("audios/intro_0.mp3"), // Using MP3 file directly without conversion
-          lipsync: generateRandomLipSync(), // Generating random lip sync data
+          audio: await generateSpeech("Hey dear... How was your day?"),  // Generate speech in-memory as Base64
+          lipsync: generateRandomLipSync(),  // Generating random lip sync data
           facialExpression: "smile",
           animation: "Talking_1", 
         },
         {
           text: "I missed you so much... Please don't go for so long!",
-          audio: await audioFileToBase64("audios/intro_1.mp3"),
+          audio: await generateSpeech("I missed you so much... Please don't go for so long!"),  // Generate speech in-memory
           lipsync: generateRandomLipSync(),
           facialExpression: "sad",
           animation: "Crying",
@@ -129,13 +145,9 @@ app.post("/chat", async (req, res) => {
     // Loop through the messages and generate audio data
     for (let i = 0; i < messages.length; i++) {
       const message = messages[i];
-      const fileName = `audios/message_${i}.mp3`; // The name of the audio file to generate
 
-      // Generate speech using gTTS
-      await generateSpeech(message.text, fileName);
-
-      // Convert the audio file to Base64 and attach it to the message
-      message.audio = await audioFileToBase64(fileName);
+      // Generate speech directly into Base64
+      message.audio = await generateSpeech(message.text);
 
       // Attach random lip sync data to each message
       message.lipsync = generateRandomLipSync();
@@ -159,17 +171,6 @@ app.post("/chat", async (req, res) => {
     }
   }
 });
-
-// Helper function to convert audio files to base64 format
-const audioFileToBase64 = async (file) => {
-  try {
-    const data = await fs.readFile(file);
-    return data.toString("base64");
-  } catch (error) {
-    console.error("Error reading audio file:", error);
-    throw error;
-  }
-};
 
 // Start the server on the specified port
 app.listen(port, () => {
