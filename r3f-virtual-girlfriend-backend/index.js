@@ -66,14 +66,10 @@ const updateMorphTargets = (nodes, lipSyncData, currentTime, smoothMorphTarget, 
       nodes.Wolf3D_Teeth.morphTargetInfluences[nodes.Wolf3D_Teeth.morphTargetDictionary[value]] = 0;
     } else {
       nodes.Wolf3D_Head.morphTargetInfluences[nodes.Wolf3D_Head.morphTargetDictionary[value]] = THREE.MathUtils.lerp(
-        nodes.Wolf3D_Head.morphTargetInfluences[nodes.Wolf3D_Head.morphTargetDictionary[value]],
-        0,
-        morphTargetSmoothing
+        nodes.Wolf3D_Head.morphTargetInfluences[nodes.Wolf3D_Head.morphTargetDictionary[value]], 0, morphTargetSmoothing
       );
       nodes.Wolf3D_Teeth.morphTargetInfluences[nodes.Wolf3D_Teeth.morphTargetDictionary[value]] = THREE.MathUtils.lerp(
-        nodes.Wolf3D_Teeth.morphTargetInfluences[nodes.Wolf3D_Teeth.morphTargetDictionary[value]],
-        0,
-        morphTargetSmoothing
+        nodes.Wolf3D_Teeth.morphTargetInfluences[nodes.Wolf3D_Teeth.morphTargetDictionary[value]], 0, morphTargetSmoothing
       );
     }
   });
@@ -87,14 +83,10 @@ const updateMorphTargets = (nodes, lipSyncData, currentTime, smoothMorphTarget, 
         nodes.Wolf3D_Teeth.morphTargetInfluences[nodes.Wolf3D_Teeth.morphTargetDictionary[viseme]] = 1;
       } else {
         nodes.Wolf3D_Head.morphTargetInfluences[nodes.Wolf3D_Head.morphTargetDictionary[viseme]] = THREE.MathUtils.lerp(
-          nodes.Wolf3D_Head.morphTargetInfluences[nodes.Wolf3D_Head.morphTargetDictionary[viseme]],
-          1,
-          morphTargetSmoothing
+          nodes.Wolf3D_Head.morphTargetInfluences[nodes.Wolf3D_Head.morphTargetDictionary[viseme]], 1, morphTargetSmoothing
         );
         nodes.Wolf3D_Teeth.morphTargetInfluences[nodes.Wolf3D_Teeth.morphTargetDictionary[viseme]] = THREE.MathUtils.lerp(
-          nodes.Wolf3D_Teeth.morphTargetInfluences[nodes.Wolf3D_Teeth.morphTargetDictionary[viseme]],
-          1,
-          morphTargetSmoothing
+          nodes.Wolf3D_Teeth.morphTargetInfluences[nodes.Wolf3D_Teeth.morphTargetDictionary[viseme]], 1, morphTargetSmoothing
         );
       }
       break;
@@ -129,10 +121,10 @@ app.post("/chat", async (req, res) => {
   }
 
   try {
-    // Call the local chatbot service
+    // Call the external chatbot service
     const chatbotResponse = await axios.post('https://virtual-gf-py.vercel.app/chat', { message: userMessage });
 
-    let messages = chatbotResponse.data;  // Expecting direct array of messages as per the example you provided
+    const messages = chatbotResponse.data;
 
     // Loop through the messages and generate audio data
     for (let i = 0; i < messages.length; i++) {
@@ -153,15 +145,30 @@ app.post("/chat", async (req, res) => {
     res.send({ messages });
 
   } catch (error) {
-    console.error('Error calling the local chatbot service:', error);
-    res.status(500).send({ error: 'Failed to process the request' });
+    console.error('Error calling the external chatbot service:', error.message);
+
+    if (error.response) {
+      // The request was made and the server responded with a status code that falls out of the range of 2xx
+      res.status(error.response.status).send({ error: error.response.data });
+    } else if (error.request) {
+      // The request was made but no response was received
+      res.status(500).send({ error: 'No response from chatbot service' });
+    } else {
+      // Something happened in setting up the request
+      res.status(500).send({ error: 'Failed to process the request' });
+    }
   }
 });
- 
+
 // Helper function to convert audio files to base64 format
 const audioFileToBase64 = async (file) => {
-  const data = await fs.readFile(file);
-  return data.toString("base64");
+  try {
+    const data = await fs.readFile(file);
+    return data.toString("base64");
+  } catch (error) {
+    console.error("Error reading audio file:", error);
+    throw error;
+  }
 };
 
 // Start the server on the specified port
