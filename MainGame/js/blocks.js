@@ -245,7 +245,7 @@ BLOCK.SPONGE = {
 
 
 BLOCK.TORCH = {
-	id: 30,
+	id: 19,
 	spawnable: true,
 	transparent: true,
 	selflit: true, // Emits light
@@ -257,7 +257,7 @@ BLOCK.TORCH = {
 };
 
 BLOCK.SNOW = {
-    id: 21,
+    id: 20,
     spawnable: true,
     transparent: false,
     selflit: false,
@@ -269,7 +269,7 @@ BLOCK.SNOW = {
 };
 
 BLOCK.FLOWER = {
-    id: 25,
+    id: 21,
     spawnable: true,
     transparent: false,
     selflit: false,
@@ -293,7 +293,7 @@ BLOCK.LADDER = {
 };
 
 BLOCK.LAVA = {
-    id: 40,
+    id: 23,
     spawnable: true,
     transparent: false,
     selflit: false,
@@ -305,7 +305,7 @@ BLOCK.LAVA = {
 };
 
 BLOCK.LAVABUBBLE = {
-    id: 41,
+    id: 24,
     spawnable: true,
     transparent: false,
     selflit: false,
