@@ -47,6 +47,7 @@ let db;
 
         if (loaded) {
             log("Loaded the world from MongoDB.");
+            log("Server Running on port 3000 [ http://localhost:3000/multiplayer.html ]");
         } else {
             log("Creating a new empty world...");
             world.createFlatWorld(WORLD_GROUNDHEIGHT);
