@@ -309,8 +309,8 @@ BLOCK.LAVABUBBLE = {
     spawnable: true,
     transparent: false,
     selflit: false,
-    gravity: true,
-    fluid: false,
+    gravity: false,
+    fluid: true,
     texture: function( world, lightmap, lit, x, y, z, dir ) {
         return [ 13/16, 14/16, 14/16, 15/16 ];
     }

@@ -294,6 +294,30 @@
                 render.setWorld(world, 8);
                 render.setPerspective(60, 0.01, 200);
 
+                			// Create physics simulator
+			var physics = new Physics();
+			physics.setWorld( world );
+        			// Render loop			
+			setInterval( function()
+			{
+				var time = new Date().getTime() / 1000.0;
+				
+				// Simulate physics
+				physics.simulate();
+				
+				// Update local player
+				player.update();
+				
+				// Build a chunk
+				render.buildChunks( 1 );
+				
+				// Draw world
+				render.setCamera( player.getEyePos().toArray(), player.angles );
+				render.draw();
+				
+				while ( new Date().getTime() / 1000 - time < 0.016 );
+			}, 1 );
+
                 // Build all world chunks
                 render.buildChunks(999);
 
@@ -401,6 +425,7 @@
                 }
             }
         });
+
         
     </script>
 </body>
