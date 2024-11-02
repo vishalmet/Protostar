@@ -145,11 +145,9 @@ Player.prototype.onMouseEvent = function( x, y, type, rmb ) {
     }
 
     if (type == MOUSE.UP) {
-        // Check if the event target is inside the material selector table
-        if (event.target.closest("#materialSelector")) {
-            // If the click is within the material selector table, prevent the action
+        if (event.target.closest("#materialSelector") || event.target.closest("#message_box")) {
             console.log("Click within material selector, block action prevented");
-            return; // Exit the function early to prevent block action
+            return;
         }
     
         this.doBlockAction(x, y, !rmb);
