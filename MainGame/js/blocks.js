@@ -292,6 +292,30 @@ BLOCK.LADDER = {
     }
 };
 
+BLOCK.LAVA = {
+    id: 40,
+    spawnable: true,
+    transparent: false,
+    selflit: false,
+    gravity: true,
+    fluid: false,
+    texture: function( world, lightmap, lit, x, y, z, dir ) {
+        return [ 15/16, 15/16, 16/16, 16/16 ];
+    }
+};
+
+BLOCK.LAVABUBBLE = {
+    id: 41,
+    spawnable: true,
+    transparent: false,
+    selflit: false,
+    gravity: true,
+    fluid: false,
+    texture: function( world, lightmap, lit, x, y, z, dir ) {
+        return [ 13/16, 14/16, 14/16, 15/16 ];
+    }
+};
+
 
 
 // fromId( id )
