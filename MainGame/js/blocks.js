@@ -268,6 +268,30 @@ BLOCK.SNOW = {
     }
 };
 
+BLOCK.FLOWER = {
+    id: 25,
+    spawnable: true,
+    transparent: false,
+    selflit: false,
+    gravity: true,
+    fluid: false,
+    texture: function( world, lightmap, lit, x, y, z, dir ) {
+        return [ 12/16, 0/16, 13/16, 1/16 ];
+    }
+};
+
+BLOCK.LADDER = {
+    id: 22,
+    spawnable: true,
+    transparent: false,
+    selflit: false,
+    gravity: true,
+    fluid: false,
+    texture: function( world, lightmap, lit, x, y, z, dir ) {
+        return [ 3/16, 5/16, 4/16, 6/16 ];
+    }
+};
+
 
 
 // fromId( id )
