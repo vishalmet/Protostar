@@ -70,34 +70,53 @@ Player.prototype.setInputCanvas = function( id ) {
 
 // setMaterialSelector( id )
 // Sets the table with the material selectors.
-Player.prototype.setMaterialSelector = function( id ) {
-    var tableRow = document.getElementById( id ).getElementsByTagName( "tr" )[0];
+Player.prototype.setMaterialSelector = function(id) {
+    var table = document.getElementById(id);
     var texOffset = 0;
+    var currentRow = document.createElement("tr");
+    table.appendChild(currentRow);
 
-    for ( var mat in BLOCK ) {
-        if ( typeof( BLOCK[mat] ) == "object" && BLOCK[mat].spawnable == true ) {
-            var selector = document.createElement( "td" );
-            selector.style.backgroundPosition = texOffset + "px 0px";
+    var texture_block = ['https://th.bing.com/th/id/OIP.CsRrGC5W0ylAqcB31nHyQwHaHa?w=1200&h=1200&rs=1&pid=ImgDetMain'];
+
+    var cellCount = 0; // Keep track of the number of cells per row
+
+    var block_count = 0;
+    for (var mat in BLOCK) {
+        if (typeof (BLOCK[mat]) == "object" && BLOCK[mat].spawnable == true) {
+            var selector = document.createElement("td");
+            selector.style.backgroundImage = `url('./media/background.png}')`;
+            selector.style.backgroundSize = 'cover'; // Ensure the image covers the cell
 
             var pl = this;
             selector.material = BLOCK[mat];
             selector.onclick = function() {
                 this.style.opacity = "1.0";
-                pl.prevSelector.style.opacity = null;
+                if (pl.prevSelector) {
+                    pl.prevSelector.style.opacity = null;
+                }
                 pl.prevSelector = this;
                 pl.buildMaterial = this.material;
-            }
+            };
 
-            if ( mat == "DIRT" ) {
+            if (mat == "DIRT") {
                 this.prevSelector = selector;
                 selector.style.opacity = "1.0";
             }
 
-            tableRow.appendChild( selector );
+            currentRow.appendChild(selector);
+            cellCount++;
             texOffset -= 70;
+
+            // Create a new row after 16 cells
+            if (cellCount >= 16) {
+                currentRow = document.createElement("tr");
+                table.appendChild(currentRow);
+                cellCount = 0;
+            }
         }
     }
-}
+    table.style.display = "table"; // Show the table once populated
+};
 
 // on( event, callback )
 // Hook a player event.
