@@ -100,16 +100,7 @@ BLOCK.BOOKCASE = {
 	}
 };
 
-// Lava
-BLOCK.LAVA = {
-	id: 6,
-	spawnable: false,
-	transparent: true,
-	selflit: true,
-	gravity: true,
-	fluid: true,
-	texture: function( world, lightmap, lit, x, y, z, dir ) { return [ 13/16, 14/16, 14/16, 15/16 ]; }
-};
+
 
 // Plank
 BLOCK.PLANK = {
@@ -271,19 +262,29 @@ BLOCK.SNOW = {
 BLOCK.FLOWER = {
     id: 25,
     spawnable: true,
-    transparent: false,
+    transparent: true,
     selflit: false,
     gravity: true,
     fluid: false,
-    texture: function( world, lightmap, lit, x, y, z, dir ) {
-        return [ 12/16, 0/16, 13/16, 1/16 ];
-    }
+    texture: function( world, lightmap, lit, x, y, z, dir ) 
+	// {
+    //     return [ 12/16, 0/16, 13/16, 1/16 ];
+    // }
+	{
+		if ( dir == DIRECTION.UP && lit )
+			return [ null , null, null, null ];
+
+		else if ( dir == DIRECTION.DOWN || !lit ) 
+			return [ 12/16, 0/16, 13/16, 1/16 ];
+		else
+			return [ 12/16, 0/16, 13/16, 1/16 ];
+	}
 };
 
 BLOCK.LADDER = {
     id: 22,
     spawnable: true,
-    transparent: false,
+    transparent: true,
     selflit: false,
     gravity: true,
     fluid: false,
@@ -313,6 +314,43 @@ BLOCK.LAVABUBBLE = {
     fluid: true,
     texture: function( world, lightmap, lit, x, y, z, dir ) {
         return [ 13/16, 14/16, 14/16, 15/16 ];
+    }
+};
+
+BLOCK.WINDOW = {
+    id: 42,
+    spawnable: true,
+    transparent: false,
+    selflit: false,
+    gravity: false,
+    fluid: false,
+    texture: function( world, lightmap, lit, x, y, z, dir ) {
+        return [ 4/16, 5/16, 5/16, 6/16 ];
+    }
+};
+
+BLOCK.WEB = {
+    id: 43,
+    spawnable: true,
+    transparent: false,
+    selflit: false,
+    gravity: false,
+    fluid: false,
+    texture: function( world, lightmap, lit, x, y, z, dir ) {
+        return [ 11/16, 0/16, 12/16, 1/16 ];
+    }
+};
+
+
+BLOCK.LIGHTGTREE = {
+    id: 44,
+    spawnable: true,
+    transparent: false,
+    selflit: false,
+    gravity: false,
+    fluid: false,
+    texture: function( world, lightmap, lit, x, y, z, dir ) {
+        return [ 15/16, 0/16, 16/16, 1/16 ];
     }
 };
 
