@@ -243,6 +243,33 @@ BLOCK.SPONGE = {
 	texture: function( world, lightmap, lit, x, y, z, dir ) { return [ 0/16, 3/16, 1/16, 4/16 ]; }
 };
 
+
+BLOCK.TORCH = {
+	id: 30,
+	spawnable: true,
+	transparent: true,
+	selflit: true, // Emits light
+	gravity: false,
+	fluid: false,
+	texture: function(world, lightmap, lit, x, y, z, dir) {
+		return [0/16, 5/16, 1/16, 6/16];
+	}
+};
+
+BLOCK.SNOW = {
+    id: 21,
+    spawnable: true,
+    transparent: false,
+    selflit: false,
+    gravity: false,
+    fluid: false,
+    texture: function( world, lightmap, lit, x, y, z, dir ) {
+        return [ 2/16, 4/16, 3/16, 5/16 ];
+    }
+};
+
+
+
 // fromId( id )
 //
 // Returns a block structure for the given id.
