@@ -279,7 +279,7 @@ Player.prototype.update = function() {
             isPopupShown = false;
         }
 
-        console.log("x :",this.pos.x,"y : ", this.pos.y, "z :", this.pos.z)
+        // console.log("x :",this.pos.x,"y : ", this.pos.y, "z :", this.pos.z)
 
         // Check if player's position meets the condition for popup
         if (Math.floor(this.pos.x) === 88 && Math.floor(this.pos.y)=== 117 && Math.floor(this.pos.z) === 16) {
