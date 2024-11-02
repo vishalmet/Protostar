@@ -84,7 +84,7 @@ Player.prototype.setMaterialSelector = function(id) {
     for (var mat in BLOCK) {
         if (typeof (BLOCK[mat]) == "object" && BLOCK[mat].spawnable == true) {
             var selector = document.createElement("td");
-            selector.style.backgroundImage = `url('./media/background.png}')`;
+            selector.style.backgroundImage = `url('../media/background.png')`;
             selector.style.backgroundSize = 'cover'; // Ensure the image covers the cell
 
             var pl = this;
@@ -143,15 +143,22 @@ Player.prototype.onMouseEvent = function( x, y, type, rmb ) {
         return;  // Ignore mouse events on mobile devices
     }
 
-    if ( type == MOUSE.UP ) {
-        this.doBlockAction( x, y, !rmb );
-        console.log("working in condition")
+    if (type == MOUSE.UP) {
+        // Check if the event target is inside the material selector table
+        if (event.target.closest("#materialSelector")) {
+            // If the click is within the material selector table, prevent the action
+            console.log("Click within material selector, block action prevented");
+            return; // Exit the function early to prevent block action
+        }
+    
+        this.doBlockAction(x, y, !rmb);
+        console.log("Working in condition");
     } else if (type == MOUSE.MOVE) {
         // Update pitch (up-down) and yaw (left-right) for player view
         this.targetYaw += x / 1000;
         this.targetPitch -= y / 1000;
-        if (this.targetPitch < -Math.PI/2) this.targetPitch = -Math.PI/2;
-        if (this.targetPitch > Math.PI/2) this.targetPitch = Math.PI/2;
+        if (this.targetPitch < -Math.PI / 2) this.targetPitch = -Math.PI / 2;
+        if (this.targetPitch > Math.PI / 2) this.targetPitch = Math.PI / 2;
     }
 }
 
