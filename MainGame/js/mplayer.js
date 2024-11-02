@@ -83,8 +83,9 @@ Player.prototype.setMaterialSelector = function(id) {
     var block_count = 0;
     for (var mat in BLOCK) {
         if (typeof (BLOCK[mat]) == "object" && BLOCK[mat].spawnable == true) {
+            block_count ++;
             var selector = document.createElement("td");
-            selector.style.backgroundImage = `url('../media/background.png')`;
+            selector.style.backgroundImage = `url('../blocking/block${block_count}.png')`;
             selector.style.backgroundSize = 'cover'; // Ensure the image covers the cell
 
             var pl = this;
@@ -115,7 +116,7 @@ Player.prototype.setMaterialSelector = function(id) {
             }
         }
     }
-    table.style.display = "table"; // Show the table once populated
+    table.style.display = "none"; // Show the table once populated
 };
 
 // on( event, callback )

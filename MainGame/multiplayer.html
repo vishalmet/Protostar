@@ -378,6 +378,17 @@
             const iframePopup = document.getElementById('iframePopupStarkShoot');
             iframePopup.style.display = 'none';
         });
+        materialSelector.style.display = 'none';
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'q' || event.key === 'Q') {
+                var materialSelector = document.getElementById('materialSelector');
+                if (materialSelector.style.display === 'none' || materialSelector.style.display === '') {
+                    materialSelector.style.display = 'table'; // Show the table
+                } else {
+                    materialSelector.style.display = 'none'; // Hide the table
+                }
+            }
+        });
     </script>
 </body>
 </html>
