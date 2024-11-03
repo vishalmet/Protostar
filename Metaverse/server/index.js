@@ -360,12 +360,16 @@ app.get("/health",(req, res) => {
 // [Your existing Socket.IO code and API routes go here]
 
 // Start the Express server on HTTPS
-server.listen(3000, () => {
-  console.log(`HTTPS Express server started on port ${PORT}`);
+// server.listen(3000, () => {
+//   console.log(`HTTPS Express server started on port ${PORT}`);
+// });
+
+server.listen(2053, '0.0.0.0', () => {
+  console.log("Secure server started on port 2053");
 });
 
 
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 2054;
 app.listen(PORT, () => {
   console.log(`Express server started on port ${PORT}`);
 });
