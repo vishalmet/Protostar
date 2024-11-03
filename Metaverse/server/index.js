@@ -10,8 +10,9 @@ import https from "https";
 
 // Load SSL certificates
 const options = {
-  key: fs.readFileSync('/etc/letsencrypt/live/your-domain.com/privkey.pem'),  // Replace with your SSL key path
-  cert: fs.readFileSync('/etc/letsencrypt/live/your-domain.com/fullchain.pem') // Replace with your SSL certificate path
+  key: fs.readFileSync('/etc/letsencrypt/live/starkshoot.fun/privkey.pem'),  // Replace with your SSL key path
+  cert: fs.readFileSync('/etc/letsencrypt/live/starkshoot.fun/fullchain.pem') // Replace with your SSL certificate path
+  ///etc/letsencrypt/live/starkshoot.fun/fullchain.pem
 };
 
 // MongoDB setup
@@ -352,8 +353,13 @@ app.get("/health",(req, res) => {
 })
 
 
-// Start the Express server
+io.listen(3000);
+console.log("Socket.IO server started on port 3000 with HTTPS, allowed CORS origin: " + origin);
+
+// [Your existing Socket.IO code and API routes go here]
+
+// Start the Express server on HTTPS
 const PORT = process.env.PORT || 3001;
-app.listen(PORT, () => {
-  console.log(`Express server started on port ${PORT}`);
+server.listen(PORT, () => {
+  console.log(`HTTPS Express server started on port ${PORT}`);
 });
