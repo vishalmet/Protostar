@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import { io } from "socket.io-client";
 
 export const socket = io(
-  import.meta.env.VITE_SERVER_URL || "http://195.35.20.212:3000"
+  import.meta.env.VITE_SERVER_URL || "http://starkshoot.fun:3000", { secure: false }
 );
 export const charactersAtom = atom([]);
 export const mapAtom = atom(null);
