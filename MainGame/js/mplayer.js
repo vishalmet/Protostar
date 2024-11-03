@@ -231,7 +231,7 @@ Player.prototype.update = function() {
 
         // Jumping (Spacebar)
         if ( this.keys[" "] && !this.falling ) {
-            velocity.z = 8; // Jump velocity
+            velocity.z = 10; // Jump velocity
         }
 
         // Walking (WASD keys)
