@@ -30,7 +30,7 @@ const app = express();
 app.use(bodyParser.json()); // To parse incoming request bodies
 app.use(cors()); // Enable CORS for all requests
 
-const origin = process.env.CLIENT_URL || "http://localhost:5173";
+const origin ="*";
 const io = new Server({
   cors: {
     origin,
