@@ -23,7 +23,8 @@ const Hero = () => {
   return (
     <div  id='home'
       style={{
-        backgroundImage: `url(${bg})`,
+        // backgroundImage: `url('https://i.pinimg.com/originals/56/3a/b1/563ab15230f5bf4259f11125fd1f9c0e.gif')`,
+        backgroundImage: `url('https://media4.giphy.com/media/Ha6xdymclg2pBgwuw3/200.webp?cid=ecf05e47338mths6u7h9btkc5zo1f05gr9s9tnu2afymtfmr&ep=v1_gifs_search&rid=200.webp&ct=g')`,
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         height: '100vh',

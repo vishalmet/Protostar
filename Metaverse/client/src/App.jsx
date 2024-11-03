@@ -19,7 +19,6 @@ function App() {
   return (
     <>
       <Router>
-        <div>
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/build" element={<Build />} />
@@ -37,7 +36,6 @@ function App() {
             <Route path="/virtualgirlfriend" element={<GFHomePage />} />
             <Route path="/home" element={<MainHome />} />
           </Routes>
-        </div>
       </Router>
     </>
   );

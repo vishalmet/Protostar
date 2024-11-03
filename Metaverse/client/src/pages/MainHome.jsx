@@ -9,7 +9,7 @@ import MiniGames from '../components/MiniGames'
 import Nav from '../components/Nav'
 import NftMarket from '../components/NftMarket'
 import SofiaAi from '../components/SofiaAi'
-
+import "./home.css"
 
 function MainHome() {
 
