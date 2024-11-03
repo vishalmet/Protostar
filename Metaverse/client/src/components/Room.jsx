@@ -269,3 +269,5 @@ export const Room = () => {
     </>
   );
 };
+
+export default Room;
