@@ -36,7 +36,7 @@ BLOCK.DIRT = {
 	spawnable: true,
 	transparent: false,
 	selflit: false,
-	gravity: false,
+	gravity: true,
 	fluid: false,
 	texture: function( world, lightmap, lit, x, y, z, dir )
 	{
@@ -55,7 +55,7 @@ BLOCK.WOOD = {
 	spawnable: true,
 	transparent: false,
 	selflit: false,
-	gravity: false,
+	gravity: true,
 	fluid: false,
 	texture: function( world, lightmap, lit, x, y, z, dir )
 	{
@@ -72,7 +72,7 @@ BLOCK.TNT = {
 	spawnable: true,
 	transparent: false,
 	selflit: false,
-	gravity: false,
+	gravity: true,
 	fluid: false,
 	texture: function( world, lightmap, lit, x, y, z, dir )
 	{
@@ -89,7 +89,7 @@ BLOCK.BOOKCASE = {
 	spawnable: true,
 	transparent: false,
 	selflit: false,
-	gravity: false,
+	gravity: true,
 	fluid: false,
 	texture: function( world, lightmap, lit, x, y, z, dir )
 	{
@@ -108,7 +108,7 @@ BLOCK.PLANK = {
 	spawnable: true,
 	transparent: false,
 	selflit: false,
-	gravity: false,
+	gravity: true,
 	fluid: false,
 	texture: function( world, lightmap, lit, x, y, z, dir ) { return [ 4/16, 0/16, 5/16, 1/16 ]; }
 };
@@ -119,7 +119,7 @@ BLOCK.COBBLESTONE = {
 	spawnable: true,
 	transparent: false,
 	selflit: false,
-	gravity: false,
+	gravity: true,
 	fluid: false,
 	texture: function( world, lightmap, lit, x, y, z, dir ) { return [ 0/16, 1/16, 1/16, 2/16 ]; }
 };
@@ -130,7 +130,7 @@ BLOCK.CONCRETE = {
 	spawnable: true,
 	transparent: false,
 	selflit: false,
-	gravity: false,
+	gravity: true,
 	fluid: false,
 	texture: function( world, lightmap, lit, x, y, z, dir ) { return [ 1/16, 0/16, 2/16, 1/16 ]; }
 };
@@ -141,7 +141,7 @@ BLOCK.BRICK = {
 	spawnable: true,
 	transparent: false,
 	selflit: false,
-	gravity: false,
+	gravity: true,
 	fluid: false,
 	texture: function( world, lightmap, lit, x, y, z, dir ) { return [ 7/16, 0/16, 8/16, 1/16 ]; }
 };
@@ -174,7 +174,7 @@ BLOCK.IRON = {
 	spawnable: true,
 	transparent: false,
 	selflit: false,
-	gravity: false,
+	gravity: true,
 	fluid: false,
 	texture: function( world, lightmap, lit, x, y, z, dir ) { return [ 6/16, 1/16, 7/16, 2/16 ]; }
 };
@@ -185,7 +185,7 @@ BLOCK.GOLD = {
 	spawnable: true,
 	transparent: false,
 	selflit: false,
-	gravity: false,
+	gravity: true,
 	fluid: false,
 	texture: function( world, lightmap, lit, x, y, z, dir ) { return [ 7/16, 1/16, 8/16, 2/16 ]; }
 };
@@ -196,7 +196,7 @@ BLOCK.DIAMOND = {
 	spawnable: true,
 	transparent: false,
 	selflit: false,
-	gravity: false,
+	gravity: true,
 	fluid: false,
 	texture: function( world, lightmap, lit, x, y, z, dir ) { return [ 8/16, 1/16, 9/16, 2/16 ]; }
 };
@@ -207,7 +207,7 @@ BLOCK.OBSIDIAN = {
 	spawnable: true,
 	transparent: false,
 	selflit: false,
-	gravity: false,
+	gravity: true,
 	fluid: false,
 	texture: function( world, lightmap, lit, x, y, z, dir ) { return [ 5/16, 2/16, 6/16, 3/16 ]; }
 };
@@ -218,7 +218,7 @@ BLOCK.GLASS = {
 	spawnable: true,
 	transparent: true,
 	selflit: false,
-	gravity: false,
+	gravity: true,
 	fluid: false,
 	texture: function( world, lightmap, lit, x, y, z, dir ) { return [ 1/16, 3/16, 2/16, 4/16 ]; }
 };
@@ -229,7 +229,7 @@ BLOCK.SPONGE = {
 	spawnable: true,
 	transparent: false,
 	selflit: false,
-	gravity: false,
+	gravity: true,
 	fluid: false,
 	texture: function( world, lightmap, lit, x, y, z, dir ) { return [ 0/16, 3/16, 1/16, 4/16 ]; }
 };
@@ -240,7 +240,7 @@ BLOCK.TORCH = {
 	spawnable: true,
 	transparent: true,
 	selflit: true, // Emits light
-	gravity: false,
+	gravity: true,
 	fluid: false,
 	texture: function(world, lightmap, lit, x, y, z, dir) {
 		return [0/16, 5/16, 1/16, 6/16];
@@ -252,7 +252,7 @@ BLOCK.SNOW = {
     spawnable: true,
     transparent: false,
     selflit: false,
-    gravity: false,
+    gravity: true,
     fluid: false,
     texture: function( world, lightmap, lit, x, y, z, dir ) {
         return [ 2/16, 4/16, 3/16, 5/16 ];
@@ -310,7 +310,7 @@ BLOCK.LAVABUBBLE = {
     spawnable: true,
     transparent: false,
     selflit: false,
-    gravity: false,
+    gravity: true,
     fluid: true,
     texture: function( world, lightmap, lit, x, y, z, dir ) {
         return [ 13/16, 14/16, 14/16, 15/16 ];
@@ -322,7 +322,7 @@ BLOCK.WINDOW = {
     spawnable: true,
     transparent: false,
     selflit: false,
-    gravity: false,
+    gravity: true,
     fluid: false,
     texture: function( world, lightmap, lit, x, y, z, dir ) {
         return [ 4/16, 5/16, 5/16, 6/16 ];
@@ -334,7 +334,7 @@ BLOCK.WEB = {
     spawnable: true,
     transparent: false,
     selflit: false,
-    gravity: false,
+    gravity: true,
     fluid: false,
     texture: function( world, lightmap, lit, x, y, z, dir ) {
         return [ 11/16, 0/16, 12/16, 1/16 ];
