@@ -4,13 +4,15 @@ import { Server } from "socket.io";
 import { MongoClient } from "mongodb";
 import express from "express";
 import bodyParser from "body-parser";
-import cors from 'cors';
+import cors from 'cors'; // Import cors
 import https from "https";
+
 
 // Load SSL certificates
 const options = {
-  key: fs.readFileSync('/etc/letsencrypt/live/starkshoot.fun/privkey.pem'),
-  cert: fs.readFileSync('/etc/letsencrypt/live/starkshoot.fun/fullchain.pem')
+  key: fs.readFileSync('/etc/letsencrypt/live/starkshoot.fun/privkey.pem'),  // Replace with your SSL key path
+  cert: fs.readFileSync('/etc/letsencrypt/live/starkshoot.fun/fullchain.pem') // Replace with your SSL certificate path
+  ///etc/letsencrypt/live/starkshoot.fun/fullchain.pem
 };
 
 // MongoDB setup
@@ -39,13 +41,17 @@ app.use(cors());
 
 const origin = "*";
 
-// Create an HTTPS server with your certificates and attach Socket.IO to it
+// Create an HTTPS server with your certificates
 const server = https.createServer(options, app);
+
+// Attach Socket.IO to the HTTPS server
 const io = new Server(server, {
   cors: {
-    origin, // Allow all origins; adjust as needed for security
+    origin,
   },
 });
+
+console.log("Server started on port 3000, allowed CORS origin: " + origin);
 
 // PATHFINDING UTILS
 
@@ -71,8 +77,10 @@ const updateGrid = (room) => {
     if (item.walkable || item.wall) {
       return;
     }
-    const width = item.rotation === 1 || item.rotation === 3 ? item.size[1] : item.size[0];
-    const height = item.rotation === 1 || item.rotation === 3 ? item.size[0] : item.size[1];
+    const width =
+      item.rotation === 1 || item.rotation === 3 ? item.size[1] : item.size[0];
+    const height =
+      item.rotation === 1 || item.rotation === 3 ? item.size[0] : item.size[1];
     for (let x = 0; x < width; x++) {
       for (let y = 0; y < height; y++) {
         room.grid.setWalkableAt(
@@ -85,7 +93,54 @@ const updateGrid = (room) => {
   });
 };
 
-// SOCKET.IO MANAGEMENT
+// ROOMS MANAGEMENT
+const rooms = [];
+
+const loadRooms = async () => {
+  let data;
+  try {
+    data = fs.readFileSync("rooms.json", "utf8");
+  } catch (ex) {
+    console.log("No rooms.json file found, using default file");
+    try {
+      data = fs.readFileSync("default.json", "utf8");
+    } catch (ex) {
+      console.log("No default.json file found, exiting");
+      process.exit(1);
+    }
+  }
+  data = JSON.parse(data);
+  data.forEach((roomItem) => {
+    const room = {
+      ...roomItem,
+      size: [7, 7], // HARDCODED FOR SIMPLICITY PURPOSES
+      gridDivision: 2,
+      characters: [],
+    };
+    room.grid = new pathfinding.Grid(
+      room.size[0] * room.gridDivision,
+      room.size[1] * room.gridDivision
+    );
+    updateGrid(room);
+    rooms.push(room);
+  });
+};
+
+loadRooms();
+
+// UTILS
+
+const generateRandomPosition = (room) => {
+  for (let i = 0; i < 100; i++) {
+    const x = Math.floor(Math.random() * room.size[0] * room.gridDivision);
+    const y = Math.floor(Math.random() * room.size[1] * room.gridDivision);
+    if (room.grid.isWalkableAt(x, y)) {
+      return [x, y];
+    }
+  }
+};
+
+// SOCKET MANAGEMENT
 
 io.on("connection", (socket) => {
   try {
@@ -167,6 +222,53 @@ io.on("connection", (socket) => {
       io.to(room.id).emit("playerMove", character);
     });
 
+    socket.on("dance", () => {
+      io.to(room.id).emit("playerDance", {
+        id: socket.id,
+      });
+    });
+
+    socket.on("chatMessage", (message) => {
+      io.to(room.id).emit("playerChatMessage", {
+        id: socket.id,
+        message,
+      });
+    });
+
+    socket.on("passwordCheck", (password) => {
+      if (password === room.password) {
+        socket.emit("passwordCheckSuccess");
+        character.canUpdateRoom = true;
+      } else {
+        socket.emit("passwordCheckFail");
+      }
+    });
+
+    socket.on("itemsUpdate", async (items) => {
+      if (!character.canUpdateRoom) {
+        return;
+      }
+      if (!items || items.length === 0) {
+        return; // security
+      }
+      room.items = items;
+      updateGrid(room);
+      room.characters.forEach((character) => {
+        character.path = [];
+        character.position = generateRandomPosition(room);
+      });
+      io.to(room.id).emit("mapUpdate", {
+        map: {
+          gridDivision: room.gridDivision,
+          size: room.size,
+          items: room.items,
+        },
+        characters: room.characters,
+      });
+
+      fs.writeFileSync("rooms.json", JSON.stringify(rooms, null, 2));
+    });
+
     socket.on("disconnect", () => {
       console.log("User disconnected");
       if (room) {
@@ -183,7 +285,7 @@ io.on("connection", (socket) => {
   }
 });
 
-// SHOP ITEMS EXAMPLE
+// SHOP ITEMS
 const items = {
   washer: {
     name: "washer",
@@ -197,6 +299,7 @@ const items = {
 
 // Express API for storing avatar models into MongoDB
 
+// Store avatar model for a player
 app.post("/api/store-avatar", async (req, res) => {
   const { player_id, model_url } = req.body;
 
@@ -206,11 +309,14 @@ app.post("/api/store-avatar", async (req, res) => {
 
   try {
     const collection = db.collection("avatars");
+
+    // Store the model URL for the player
     await collection.updateOne(
-      { player_id },
-      { $set: { model_url, updatedAt: new Date() } },
-      { upsert: true }
+      { player_id }, // Find by player_id
+      { $set: { model_url, updatedAt: new Date() } }, // Update the model_url and timestamp
+      { upsert: true } // If the document doesn't exist, create it
     );
+
     res.status(200).json({ message: "Model URL stored successfully." });
   } catch (err) {
     console.error("Error storing model URL:", err);
@@ -218,11 +324,14 @@ app.post("/api/store-avatar", async (req, res) => {
   }
 });
 
+// Retrieve the last model URL by player_id
 app.get("/api/get-avatar/:player_id", async (req, res) => {
   const player_id = req.params.player_id;
 
   try {
     const collection = db.collection("avatars");
+
+    // Retrieve the most recent model URL for the player
     const playerData = await collection.findOne({ player_id });
 
     if (playerData) {
@@ -236,12 +345,21 @@ app.get("/api/get-avatar/:player_id", async (req, res) => {
   }
 });
 
-// Health check endpoint
-app.get("/health", (req, res) => {
-  return res.status(200).json({ status: "good" });
-});
 
-// Start the HTTPS server on port 3000
-server.listen(3000, () => {
-  console.log(`HTTPS Express server with Socket.IO started on port 3000`);
+
+
+app.get("/health",(req, res) => {
+  return res.status(200).json({status:"good"})
+})
+
+
+io.listen(3000);
+console.log("Socket.IO server started on port 3000 with HTTPS, allowed CORS origin: " + origin);
+
+// [Your existing Socket.IO code and API routes go here]
+
+// Start the Express server on HTTPS
+const PORT = process.env.PORT || 3001;
+server.listen(PORT, () => {
+  console.log(`HTTPS Express server started on port ${PORT}`);
 });
