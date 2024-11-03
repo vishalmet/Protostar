@@ -5,6 +5,14 @@ import { MongoClient } from "mongodb";
 import express from "express";
 import bodyParser from "body-parser";
 import cors from 'cors'; // Import cors
+import https from "https";
+
+
+// Load SSL certificates
+const options = {
+  key: fs.readFileSync('/etc/letsencrypt/live/your-domain.com/privkey.pem'),  // Replace with your SSL key path
+  cert: fs.readFileSync('/etc/letsencrypt/live/your-domain.com/fullchain.pem') // Replace with your SSL certificate path
+};
 
 // MongoDB setup
 const uri = "mongodb+srv://nagi:nagi@cluster0.ohv5gsc.mongodb.net/";
@@ -27,17 +35,21 @@ connectToDB();
 
 // Setup express app
 const app = express();
-app.use(bodyParser.json()); // To parse incoming request bodies
-app.use(cors()); // Enable CORS for all requests
+app.use(bodyParser.json());
+app.use(cors());
 
-const origin ="*";
-const io = new Server({
+const origin = "*";
+
+// Create an HTTPS server with your certificates
+const server = https.createServer(options, app);
+
+// Attach Socket.IO to the HTTPS server
+const io = new Server(server, {
   cors: {
     origin,
   },
 });
 
-io.listen(3000);
 console.log("Server started on port 3000, allowed CORS origin: " + origin);
 
 // PATHFINDING UTILS
