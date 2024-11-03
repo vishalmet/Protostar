@@ -928,6 +928,7 @@
   integrity sha512-Ja/Vfqe3HpuzRsG1oBtWTHk2PGZ7GR+2Vz5iYGelAw8dx32K0y7PjVuxK6z1nMpZOqAFsRUPCkK1YjJ56qJlgw==
 
 "@esbuild/win32-x64@0.16.17":
+"@esbuild/win32-x64@0.16.17":
   version "0.16.17"
   resolved "https://registry.npmjs.org/@esbuild/win32-x64/-/win32-x64-0.16.17.tgz"
   integrity sha512-y+EHuSchhL7FjHgvQL/0fnnFmO4T1bhvWANX6gcnqTjtnKWbTvUMCpGnv2+t+31d7RzyEAYAd4u2fnIhHL6N/Q==

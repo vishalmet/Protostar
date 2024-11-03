@@ -5,6 +5,15 @@ import { MongoClient } from "mongodb";
 import express from "express";
 import bodyParser from "body-parser";
 import cors from 'cors'; // Import cors
+import https from "https";
+
+
+// Load SSL certificates
+const options = {
+  key: fs.readFileSync('/etc/letsencrypt/live/starkshoot.fun/privkey.pem'),  // Replace with your SSL key path
+  cert: fs.readFileSync('/etc/letsencrypt/live/starkshoot.fun/fullchain.pem') // Replace with your SSL certificate path
+  ///etc/letsencrypt/live/starkshoot.fun/fullchain.pem
+};
 
 // MongoDB setup
 const uri = "mongodb+srv://nagi:nagi@cluster0.ohv5gsc.mongodb.net/";
@@ -27,17 +36,21 @@ connectToDB();
 
 // Setup express app
 const app = express();
-app.use(bodyParser.json()); // To parse incoming request bodies
-app.use(cors()); // Enable CORS for all requests
+app.use(bodyParser.json());
+app.use(cors());
 
-const origin ="*";
-const io = new Server({
+const origin = "*";
+
+// Create an HTTPS server with your certificates
+const server = https.createServer(options, app);
+
+// Attach Socket.IO to the HTTPS server
+const io = new Server(server, {
   cors: {
     origin,
   },
 });
 
-io.listen(3000);
 console.log("Server started on port 3000, allowed CORS origin: " + origin);
 
 // PATHFINDING UTILS
@@ -340,7 +353,18 @@ app.get("/health",(req, res) => {
 })
 
 
-// Start the Express server
+// io.listen(3000);
+// console.log("Socket.IO server started on port 3000 with HTTPS, allowed CORS origin: " + origin);
+
+
+// [Your existing Socket.IO code and API routes go here]
+
+// Start the Express server on HTTPS
+server.listen(3000, () => {
+  console.log(`HTTPS Express server started on port ${PORT}`);
+});
+
+
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
   console.log(`Express server started on port ${PORT}`);
