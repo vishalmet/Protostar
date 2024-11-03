@@ -7,6 +7,7 @@ import char4 from '../assets/char4.png';
 import char5 from '../assets/char5.png';
 import char6 from '../assets/char6.png';
 import bg from '../assets/magicstudio-art.jpg'
+import { Link } from 'react-router-dom';
 
 const Hero = () => {
   const characters = [char1, char2, char3, char4, char5, char6];
@@ -46,9 +47,11 @@ const Hero = () => {
         <p className="text-base md:text-lg lg:text-xl">
           Create your world, compete with others, and trade NFT worlds in a vibrant metaverse.
         </p>
-        <button className="px-6 py-3 bg-[#8689EB] border border-[#07030b] text-white font-semibold rounded-lg shadow-md hover:border-[#64748B] hover:border hover:bg-[#07030b] transition duration-300">
-          Join Now
-        </button>
+        <Link to="/home">
+          <button className="px-6 py-3 bg-[#8689EB] border border-[#07030b] text-white font-semibold rounded-lg shadow-md hover:border-[#64748B] hover:bg-[#07030b] transition duration-300">
+            Let's Play ✨
+          </button>
+        </Link>
       </div>
 
       {/* Right section - Character slideshow */}
