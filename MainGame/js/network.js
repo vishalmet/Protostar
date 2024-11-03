@@ -265,7 +265,7 @@ function Server( socketio, slots )
 
 	this.oneUserPerIp = true;
 
-    http.listen(3000, function() {});
+    http.listen(80, function() {});
 }
 
 // setWorld( world )
