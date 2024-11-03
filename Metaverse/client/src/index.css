@@ -27,3 +27,15 @@ body {
 .min-h-screen {
   min-height: 100vh;
 }
+
+
+.text-shadow-custom {
+  text-shadow: 2px 2px 4px #64748B;
+}
+
+.shadow-custom {
+  box-shadow: -5px -5px 15px #64748B, 5px 5px 15px #64748B;
+}
+.section-shadow {
+  box-shadow: -10px -10px 20px #64748B, 10px 10px 20px #64748B;
+}

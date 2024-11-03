@@ -13,6 +13,7 @@ import SelectMode from "./pages/SelectMode";
 import SaleMap from "./pages/SaleMap";
 import Settings from "./pages/Settings";
 import GFHomePage from "./components/GFHomePage";
+import MainHome from "./pages/MainHome";
 
 function App() {
   return (
@@ -34,6 +35,7 @@ function App() {
             <Route path="/salemap" element={<SaleMap />} />
             <Route path="/settings" element={<Settings />} />
             <Route path="/virtualgirlfriend" element={<GFHomePage />} />
+            <Route path="/home" element={<MainHome />} />
           </Routes>
         </div>
       </Router>
