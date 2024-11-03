@@ -20,7 +20,7 @@ function App() {
     <>
       <Router>
           <Routes>
-            <Route path="/home" element={<Home />} />
+            <Route path="/" element={<Home />} />
             <Route path="/build" element={<Build />} />
             <Route path="/bot" element={<Bot />} />
             <Route path="/build/buildgame" element={<BuildGame />} />
@@ -34,7 +34,7 @@ function App() {
             <Route path="/salemap" element={<SaleMap />} />
             <Route path="/settings" element={<Settings />} />
             <Route path="/virtualgirlfriend" element={<GFHomePage />} />
-            <Route path="/" element={<MainHome />} />
+            <Route path="/home" element={<MainHome />} />
           </Routes>
       </Router>
     </>
