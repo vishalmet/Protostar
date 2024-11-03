@@ -353,13 +353,19 @@ app.get("/health",(req, res) => {
 })
 
 
-io.listen(3000);
-console.log("Socket.IO server started on port 3000 with HTTPS, allowed CORS origin: " + origin);
+// io.listen(3000);
+// console.log("Socket.IO server started on port 3000 with HTTPS, allowed CORS origin: " + origin);
+
 
 // [Your existing Socket.IO code and API routes go here]
 
 // Start the Express server on HTTPS
-const PORT = process.env.PORT || 3001;
-server.listen(PORT, () => {
+server.listen(3000, () => {
   console.log(`HTTPS Express server started on port ${PORT}`);
+});
+
+
+const PORT = process.env.PORT || 3001;
+app.listen(PORT, () => {
+  console.log(`Express server started on port ${PORT}`);
 });
