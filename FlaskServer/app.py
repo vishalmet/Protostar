@@ -2,10 +2,13 @@ from flask import Flask, request, jsonify
 import requests
 import json
 from routes.user_routes import user_bp
+from routes.message_routes import message_bp
 
 app = Flask(__name__)
 
 app.register_blueprint(user_bp, url_prefix='/user')
+app.register_blueprint(message_bp, url_prefix='/message')
+
 
 api_key = "gdmg6kqp"
 
