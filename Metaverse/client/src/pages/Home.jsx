@@ -11,17 +11,25 @@ import {
   roomIDAtom,
 } from "../components/SocketManager";
 import { UI } from "../components/UI";
+import { useParams } from 'react-router-dom';
 
 const Home = () => {
   const [roomID] = useAtom(roomIDAtom);
-
+  const { userid } = useParams();
   const { progress } = useProgress();
   const [loaded, setLoaded] = useState(false);
   const [items] = useAtom(itemsAtom);
 
   useEffect(() => {
+    if (userid) {
+      localStorage.setItem('userid', userid);
+      console.log("userid stored in localStorage: ", userid);
+    }
+  }, [userid]);
+
+  useEffect(() => {
     if (progress === 100 && items) {
-      setLoaded(true); // As progress can go back to 0 when new resources are loaded, we need to make sure we don't fade out the UI when that happens
+      setLoaded(true);
     }
   }, [progress]);
   return (
