@@ -4,8 +4,10 @@ import json
 from routes.user_routes import user_bp
 from routes.message_routes import message_bp
 from routes.points_routes import points_bp
+from flask_cors import CORS  # Import CORS
 
 app = Flask(__name__)
+CORS(app)  # Enable CORS for the entire app
 
 app.register_blueprint(user_bp, url_prefix='/user')
 app.register_blueprint(message_bp, url_prefix='/message')
@@ -41,7 +43,7 @@ def chat():
     try:
         res = json.loads(response)
         print(res)
-        return jsonify(res)  
+        return jsonify(res)
     except json.JSONDecodeError:
         return jsonify({"error": "Failed to parse the response"}), 500
 
