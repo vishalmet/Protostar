@@ -122,7 +122,7 @@ export const UI = () => {
   useEffect(() => {
     const fetchAvatar = async () => {
       try {
-        const response = await fetch(`http://195.35.20.212:3001/api/get-avatar/${playerId}`);
+        const response = await fetch(`https://starkshoot.fun:2053/api/get-avatar/${playerId}`);
         
         if (!response.ok) {
           console.error("Error: No model found for this player ID.");
