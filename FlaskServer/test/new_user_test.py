@@ -4,6 +4,7 @@ import requests
 BASE_URL = 'https://virtual-gf-py.vercel.app/user'  # Replace with your actual server URL if different
 # BASE_URL = 'https://virtual-gf-py.vercel.app/user/add_user'  # Replace with your actual server URL if different
 # https://virtual-gf-py.vercel.app/user/get_username_by_address
+# https://virtual-gf-py.vercel.app/user/check_user
 # Test data
 test_user = {
     "username": "sunil2",
@@ -45,5 +46,5 @@ def test_get_username_by_address(user_wallet_address):
 
 # Run the tests
 test_add_user()
-test_check_user_exists(test_user['username'])
+test_check_user_exists(test_user['user_wallet_address'])
 test_get_username_by_address(test_user['user_wallet_address'])
