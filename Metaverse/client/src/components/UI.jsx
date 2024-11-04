@@ -5,8 +5,8 @@ import { AvatarCreator } from "@readyplayerme/react-avatar-creator";
 import { motion } from "framer-motion";
 import { roomItemsAtom } from "./Room";
 import { roomIDAtom, socket } from "./SocketManager";
-import { Link } from "react-router-dom";
 import axios from "axios"; 
+import { Link, useNavigate } from 'react-router-dom';
 
 export const buildModeAtom = atom(false);
 export const shopModeAtom = atom(false);
@@ -82,6 +82,23 @@ export const UI = () => {
   const [avatarUrl, setAvatarUrl] = useAtom(avatarUrlAtom);
   const [roomID, setRoomID] = useAtom(roomIDAtom);
   const [passwordCorrectForRoom, setPasswordCorrectForRoom] = useState(false);
+  const navigate = useNavigate();
+
+  const handleRedirect = () => {
+      // Get the `userid` from localStorage
+      const userid = localStorage.getItem('userid');
+      const staticAddress = '12345_static_address';
+
+      if (userid) {
+          // Construct the URL and redirect
+          window.location.href = `https://starkshoot.fun/multiplayer.html?username=${userid}&address=${staticAddress}`;
+      } else {
+          // Handle the case where `userid` is not found
+          alert('User ID not found in localStorage.');
+          navigate('/'); // Redirect to another route if needed
+      }
+  };
+  
   const leaveRoom = () => {
     socket.emit("leaveRoom");
     setRoomID(null);
@@ -291,8 +308,11 @@ export const UI = () => {
                   </svg>
                 </button>
                 <div className="flex justify-between px-5 items-center">
-                  <button className="py-2 px-4 h-fit rounded-full bg-slate-500 text-white drop-shadow-md cursor-pointer hover:bg-slate-800 transition-colors">
-                    <Link to="/build">Build</Link>
+                  <button
+                      className="py-2 px-4 h-fit rounded-full bg-slate-500 text-white drop-shadow-md cursor-pointer hover:bg-slate-800 transition-colors"
+                      onClick={handleRedirect}
+                  >
+                      Build
                   </button>
                 </div>
               </div>
