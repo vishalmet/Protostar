@@ -2,6 +2,12 @@ import requests
 
 BASE_URL = 'http://localhost:5000/user'
 
+# http://localhost:5000/user/add_user
+    # payload = {
+    #     "username": username,
+    #     "user_wallet_address": user_wallet_address
+    # }
+
 # Function to test the /add_user endpoint
 def test_add_user(username, user_wallet_address):
     url = f'{BASE_URL}/add_user'

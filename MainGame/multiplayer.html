@@ -74,7 +74,10 @@
     <!-- Nickname box -->
     <div id="nickname">
         <span>Nickname:</span><br />
-        <input id="nickname_input" type="text" maxlength="15" spellcheck="false" onkeypress="onNicknameEnter(this, event)" />
+        <div style="display: flex; flex-direction: column; align-items: center; justify-content: space-between; gap: 25px;">
+            <input id="nickname_input" type="text" maxlength="15" spellcheck="false" onkeypress="onNicknameEnter(this, event)" />
+            <button id="joinGameBtn" style="padding: 10px 28px; z-index: 9999; border: 2px solid #7f7f7f; background: #7f7f7f33; color: white;">Join Game</button>
+        </div>
     </div>
 
     <!-- Joining information -->
@@ -97,6 +100,46 @@
 
     <!-- Main code -->
     <script type="text/javascript">
+        document.getElementById('joinGameBtn').addEventListener('click', () => {
+            const nicknameInput = document.getElementById('nickname_input');
+            const nickname = nicknameInput.value.trim();
+        
+            if (nickname.length > 0) {
+                joinGame(nickname);
+            } else {
+                alert('Please enter a valid nickname to join the game.');
+            }
+        });
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const username = urlParams.get('username');
+        const address = urlParams.get('address');
+        
+        // Store the username and address in localStorage if they exist in the URL
+        if (username) {
+            localStorage.setItem('username', username);
+        }
+        
+        if (address) {
+            localStorage.setItem('address', address);
+        }
+        
+        console.log('Username stored:', localStorage.getItem('username'));
+        console.log('Address stored:', localStorage.getItem('address'));
+        
+        document.addEventListener('DOMContentLoaded', () => {
+            const nicknameInput = document.getElementById('nickname_input');
+            const storedUsername = localStorage.getItem('username');
+        
+            if (storedUsername) {
+                nicknameInput.value = storedUsername;
+                nicknameInput.readOnly = true;
+            } else {
+                nicknameInput.readOnly = false;
+            }
+        });
+
+
         // Function to check if the device is mobile
         function isMobileDevice() {
             return /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
@@ -297,7 +340,7 @@
                 			// Create physics simulator
 			var physics = new Physics();
 			physics.setWorld( world );
-        			// Render loop			
+        			// Render loop
 			setInterval( function()
 			{
 				var time = new Date().getTime() / 1000.0;
