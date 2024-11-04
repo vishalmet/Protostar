@@ -92,10 +92,10 @@ export const UI = () => {
           try {
               // Call the API to get the user address
               const response = await fetch(`https://virtual-gf-py.vercel.app/user/get_username_by_address?user_wallet_address=${userid}`);
-              
-              if (!response.ok) {
-                  throw new Error('Failed to fetch the address from the server.');
-              }
+              console.log(response)
+              // if (!response.ok) {
+              //     throw new Error('Failed to fetch the address from the server.');
+              // }
 
               const data = await response.json();
 

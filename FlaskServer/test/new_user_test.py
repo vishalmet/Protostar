@@ -5,8 +5,8 @@ BASE_URL = 'https://virtual-gf-py.vercel.app/user'  # Replace with your actual s
 # https://virtual-gf-py.vercel.app/user/get_username_by_address
 # Test data
 test_user = {
-    "username": "test_user1234",
-    "user_wallet_address": "wallet_address_123454"
+    "username": "address_for_sample_user_123",
+    "user_wallet_address": "sample"
 }
 
 # Function to test adding a user
