@@ -1,12 +1,12 @@
 import requests
 
 # Base URL of the Flask application
-BASE_URL = 'http://localhost:5000/user'  # Replace with your actual server URL if different
-
+BASE_URL = 'https://virtual-gf-py.vercel.app/user'  # Replace with your actual server URL if different
+# https://virtual-gf-py.vercel.app/user/get_username_by_address
 # Test data
 test_user = {
-    "username": "test_user123",
-    "user_wallet_address": "wallet_address_12345"
+    "username": "address_for_sample_user_123",
+    "user_wallet_address": "sample"
 }
 
 # Function to test adding a user
@@ -27,15 +27,20 @@ def test_check_user_exists(username):
     else:
         print("Check User Exists Test Failed:", response.status_code, response.text)
 
-# Function to test getting a username by wallet address
 def test_get_username_by_address(user_wallet_address):
     response = requests.get(f"{BASE_URL}/get_username_by_address", params={"user_wallet_address": user_wallet_address})
-    if response.status_code == 200:
-        print("Get Username by Address Test Passed:", response.json())
-    elif response.status_code == 404:
-        print("User not found:", response.json())
-    else:
-        print("Get Username by Address Test Failed:", response.status_code, response.text)
+    print("Raw Response:", response.text)  # Log the raw response
+    
+    try:
+        json_data = response.json()
+        if response.status_code == 200:
+            print("Get Username by Address Test Passed:", json_data)
+        elif response.status_code == 404:
+            print("User not found:", json_data)
+        else:
+            print("Get Username by Address Test Failed:", response.status_code, response.text)
+    except requests.exceptions.JSONDecodeError:
+        print("Failed to decode JSON. Response content might not be JSON:", response.text)
 
 # Run the tests
 test_add_user()

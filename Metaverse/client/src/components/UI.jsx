@@ -84,20 +84,38 @@ export const UI = () => {
   const [passwordCorrectForRoom, setPasswordCorrectForRoom] = useState(false);
   const navigate = useNavigate();
 
-  const handleRedirect = () => {
+  const handleRedirect = async () => {
       // Get the `userid` from localStorage
       const userid = localStorage.getItem('userid');
-      const staticAddress = '12345_static_address';
 
       if (userid) {
-          // Construct the URL and redirect
-          window.location.href = `https://starkshoot.fun/multiplayer.html?username=${userid}&address=${staticAddress}`;
+          try {
+              // Call the API to get the user address
+              const response = await fetch(`https://virtual-gf-py.vercel.app/user/get_username_by_address?user_wallet_address=${userid}`);
+              console.log(response)
+              if (!response.ok) {
+                  throw new Error('Failed to fetch the address from the server.');
+              }
+
+              const data = await response.json();
+
+              if (data.username) {
+                  const address = data.username;
+                  window.location.href = `https://starkshoot.fun/multiplayer.html?username=${userid}&address=${address}`;
+              } else {
+                  alert('Address not found for the given user ID.');
+              }
+          } catch (error) {
+              console.error('Error:', error);
+              alert('An error occurred while fetching the address.');
+          }
       } else {
           // Handle the case where `userid` is not found
           alert('User ID not found in localStorage.');
           navigate('/'); // Redirect to another route if needed
       }
   };
+
   
   const leaveRoom = () => {
     socket.emit("leaveRoom");
