@@ -1,6 +1,6 @@
 import requests
 
-BASE_URL = 'http://localhost:5000/message'
+BASE_URL = 'https://virtual-gf-py.vercel.app/message'
 
 # Function to test the /add_message endpoint
 def test_add_message(user_id, message, msg_type):
