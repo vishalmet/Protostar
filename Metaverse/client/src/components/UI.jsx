@@ -117,7 +117,7 @@ export const UI = () => {
       setChatMessage("");
     }
   };
-  const playerId = "admin";
+  const playerId = localStorage.getItem('userid');
 
   useEffect(() => {
     const fetchAvatar = async () => {
