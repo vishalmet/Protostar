@@ -101,7 +101,9 @@ export const UI = () => {
 
               if (data.username) {
                   const address = data.username;
-                  window.location.href = `https://starkshoot.fun/multiplayer.html?username=${userid}&address=${address}`;
+                  console.log("add",address);
+                   window.location.href = `https://starkshoot.fun/multiplayer.html?username=${address}&address=${userid}`;
+                  console.log(`https://starkshoot.fun/multiplayer.html?username=${address}&address=${userid}`);
               } else {
                   alert('Address not found for the given user ID.');
               }
