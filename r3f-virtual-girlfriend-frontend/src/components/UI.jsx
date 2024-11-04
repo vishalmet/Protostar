@@ -86,7 +86,13 @@ export const UI = ({ hidden, ...props }) => {
             </svg>
           </button>
         </div>
+        {message && message.text && (
+          <div className="self-center bg-gray-100 bg-opacity-75 p-4 rounded-lg mb-4 max-w-md">
+            <p className="text-gray-900">{message.text}</p>
+          </div>
+        )}
         <div className="flex items-center gap-2 pointer-events-auto max-w-screen-sm w-full mx-auto">
+        
           <input
             className="w-full placeholder:text-gray-800 placeholder:italic p-4 rounded-md bg-opacity-50 bg-white backdrop-blur-md"
             placeholder="Type a message..."

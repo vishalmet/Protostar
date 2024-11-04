@@ -52,8 +52,12 @@ export const ChatProvider = ({ children }) => {
 
 export const useChat = () => {
   const context = useContext(ChatContext);
+  console.log(context);
+  const messageText = context.message && context.message.text ? context.message.text : "";
+  console.log("Message text:", messageText);
   if (!context) {
     throw new Error("useChat must be used within a ChatProvider");
   }
-  return context;
+  
+  return { ...context, messageText };
 };
