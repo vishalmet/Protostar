@@ -2,11 +2,12 @@ import requests
 
 # Base URL of the Flask application
 BASE_URL = 'https://virtual-gf-py.vercel.app/user'  # Replace with your actual server URL if different
+# BASE_URL = 'https://virtual-gf-py.vercel.app/user/add_user'  # Replace with your actual server URL if different
 # https://virtual-gf-py.vercel.app/user/get_username_by_address
 # Test data
 test_user = {
-    "username": "sunil",
-    "user_wallet_address": "0xebA2E8791585Cb1e20E40192c716E025A94DAb64"
+    "username": "sunil2",
+    "user_wallet_address": "0xebA2E8791585Cb1e20E40192c716E025A94DAb642"
 }
 
 # Function to test adding a user
