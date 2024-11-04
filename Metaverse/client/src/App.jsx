@@ -21,7 +21,6 @@ function App() {
       <Router>
           <Routes>
             <Route path="/" element={<Home />} />
-            {/* <Route path="/:userid" element={<Home />} /> */}
             <Route path="/build" element={<Build />} />
             <Route path="/bot" element={<Bot />} />
             <Route path="/build/buildgame" element={<BuildGame />} />

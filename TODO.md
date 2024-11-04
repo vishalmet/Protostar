@@ -9,6 +9,7 @@
 - flask server to store the messages    ❌
 - Ui changes                            ❌
 - minecraft store the messages into db  ❌
+- add reload button in gf
 
 
-
+example link🔗: http://localhost/multiplayer.html?username=john_doe&address=asde2wses2eh4u4dhsds
