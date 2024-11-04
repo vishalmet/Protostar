@@ -3,12 +3,13 @@ import requests
 import json
 from routes.user_routes import user_bp
 from routes.message_routes import message_bp
+from routes.points_routes import points_bp
 
 app = Flask(__name__)
 
 app.register_blueprint(user_bp, url_prefix='/user')
 app.register_blueprint(message_bp, url_prefix='/message')
-
+app.register_blueprint(points_bp, url_prefix='/points')
 
 api_key = "gdmg6kqp"
 
