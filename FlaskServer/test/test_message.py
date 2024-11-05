@@ -1,6 +1,6 @@
 import requests
 
-BASE_URL = 'https://virtual-gf-py.vercel.app/message'
+BASE_URL = ' http://127.0.0.1:5000/message'
 
 # Function to test the /add_message endpoint
 def test_add_message(user_id, message, msg_type):
@@ -42,9 +42,9 @@ def test_get_messages(user_id):
         print("Response:", response.json())
 
 # Test the endpoints
-if __name__ == "__main__":
+if __name__ == "__main__": 
     # Test adding a message
-    test_add_message("12345", "Hello, this is a test message!", "notification")
+    test_add_message("123456", "Hello, this is a test message!", "notification")
     
     # Test retrieving messages
-    test_get_messages("12345")
+    test_get_messages("123456")
