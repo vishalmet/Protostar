@@ -117,6 +117,21 @@ export const UI = () => {
           navigate('/'); // Redirect to another route if needed
       }
   };
+  const handleRedirectDress = async () => {
+      const userid = localStorage.getItem('userid');
+
+      if (userid) {
+          try {
+            window.location.href = `https://starkshoot.fun/dressup.html?address=${userid}`
+          } catch (error) {
+              console.error('Error:', error);
+              alert('An error occurred while fetching the address.');
+          }
+      } else {
+          alert('User ID not found in localStorage.');
+          navigate('/');
+      }
+  };
 
   
   const leaveRoom = () => {
@@ -310,7 +325,7 @@ export const UI = () => {
               <div className="flex relative ">
                 <button
                   className="p-4 rounded-full bg-slate-500 text-white drop-shadow-md cursor-pointer hover:bg-slate-800 transition-colors"
-                  onClick={() => setAvatarMode(true)}
+                  onClick={handleRedirectDress}
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -329,10 +344,11 @@ export const UI = () => {
                 </button>
                 <div className="flex justify-between px-5 items-center">
                   <button
+                    style={{padding:"13px 25px"}}
                       className="py-2 px-4 h-fit rounded-full bg-slate-500 text-white drop-shadow-md cursor-pointer hover:bg-slate-800 transition-colors"
                       onClick={handleRedirect}
                   >
-                      Build
+                      Let's Build ✨
                   </button>
                 </div>
               </div>
