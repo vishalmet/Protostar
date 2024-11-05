@@ -17,9 +17,25 @@ let transitionProgress = 0;
 
 let controls;
 
+// Create a loader element
+const loaderElement = document.createElement('div');
+loaderElement.style.position = 'absolute';
+loaderElement.style.top = '50%';
+loaderElement.style.left = '50%';
+loaderElement.style.transform = 'translate(-50%, -50%)';
+loaderElement.style.color = 'white';
+loaderElement.style.fontSize = '34px';
+loaderElement.style.display = 'none'; // Initially hidden
+loaderElement.innerText = 'Loading...';
+document.body.appendChild(loaderElement);
+
 async function loadAvatar(url) {
+  // Show the loader
+  loaderElement.style.display = 'block';
+
   const loader = new GLTFLoader();
   const gltf = await loader.loadAsync(url);
+  
   model = gltf.scene;
   scene.add(model);
 
@@ -35,6 +51,10 @@ async function loadAvatar(url) {
   });
 
   animationGroup.add(model);
+
+  // Hide the loader after loading
+  loaderElement.style.display = 'none';
+
   return model;
 }
 
@@ -83,7 +103,7 @@ async function init() {
   scene = new THREE.Scene();
 
   const textureLoader = new THREE.TextureLoader();
-  textureLoader.load("https://img.freepik.com/premium-photo/landscape-simple-illustration_905829-2768.jpg", function (texture) {
+  textureLoader.load("https://res.cloudinary.com/dvddnptpi/image/upload/v1730821084/lislfmaibeoddcepehmr.avif", function (texture) {
     scene.background = texture;
   });
 
@@ -102,12 +122,11 @@ async function init() {
     scene.environment = texture;
   });
 
-  const groundColor = 0x006400;
+  const groundColor = 0xD9C7B8;
   const mesh = new THREE.Mesh(new THREE.PlaneGeometry(100, 100), new THREE.MeshPhongMaterial({ color: groundColor, depthWrite: false }));
   mesh.rotation.x = -Math.PI / 2;
   mesh.receiveShadow = true;
   scene.add(mesh);
-
 
   var modelUrl = "";
   var playerId = localStorage.getItem('address');
@@ -115,21 +134,21 @@ async function init() {
     const response = await fetch(`https://starkshoot.fun:2053/api/get-avatar/${playerId}`);
     
     if (!response.ok) {
-      modelUrl = "public/default_model.glb"
+      modelUrl = "public/default_model.glb";
       console.error("Error: No model found for this player ID.");
     }
 
     const data = await response.json();
-    console.log(data)
+    console.log(data);
     modelUrl = data.model_url;
   } catch (error) {
-    modelUrl = "public/default_model.glb"
+    modelUrl = "public/default_model.glb";
     console.error("Error fetching avatar model:", error);
   }
-  if (modelUrl === undefined){
-    modelUrl = "public/default_model.glb"
+  if (modelUrl === undefined) {
+    modelUrl = "public/default_model.glb";
   }
-  console.log("modelUrl", modelUrl)
+  console.log("modelUrl", modelUrl);
 
   currentAvatar = await loadAvatar(modelUrl);
 
@@ -202,9 +221,9 @@ function initAvaturn() {
       const modelUrl = data.url;
       console.log("Exported model URL:", modelUrl);
       var player_id = localStorage.getItem('address');
-      console.log(player_id, modelUrl)
+      console.log(player_id, modelUrl);
       
-      if (player_id){
+      if (player_id) {
         storeAvatarModel(player_id, modelUrl);
       }
 
@@ -246,6 +265,10 @@ async function storeAvatarModel(player_id, modelUrl) {
 }
 
 await init();
+closeIframe();
+document.querySelector("#buttonOpen").addEventListener("click", openIframe);
+document.querySelector("#buttonClose").addEventListener("click", closeIframe);
+
 closeIframe();
 document.querySelector("#buttonOpen").addEventListener("click", openIframe);
 document.querySelector("#buttonClose").addEventListener("click", closeIframe);

@@ -14,19 +14,22 @@
       href="https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wght@8..144,700&family=Roboto:ital,wght@0,500;1,300;1,400&display=swap"
       rel="stylesheet"
     />
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Avaturn three.js Example</title>
+    <title>Avaturn</title>
     <link href="./main.css" rel="stylesheet" />
   </head>
 
   <body>
-    <section class="main" style="text-align: center;margin:auto; right:0px; left: 0px;">
-      <h2>Avaturn three.js example</h2>
-      <div class="actions">
-        <input type="button" id="buttonOpen" value="Open Avaturn" />
-        <input type="button" id="buttonClose" value="Close Avaturn" />
+    <div class="flex justify-center">
+    <section class="main flex justify-center items-end h-screen p-10">
+      <div class="actions space-x-4">
+        <input type="button" id="buttonOpen" value="Open Avaturn" class="bg-blue-500 hover:bg-blue-400 p-2 px-5 text-base shadow-lg" />
+        <input type="button" id="buttonClose" value="Close Avaturn" class="bg-red-500 hover:bg-red-400 p-2 px-5 text-base shadow-lg" />
       </div>
     </section>
+  </div>
+    
     <div id="avaturn-sdk-container"></div>
     <div style="position: fixed">
       <a
