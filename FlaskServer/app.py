@@ -4,6 +4,7 @@ import json
 from routes.user_routes import user_bp
 from routes.message_routes import message_bp
 from routes.points_routes import points_bp
+from routes.score_routes import score_bp
 from flask_cors import CORS  # Import CORS
 
 app = Flask(__name__)
@@ -12,6 +13,7 @@ CORS(app)  # Enable CORS for the entire app
 app.register_blueprint(user_bp, url_prefix='/user')
 app.register_blueprint(message_bp, url_prefix='/message')
 app.register_blueprint(points_bp, url_prefix='/points')
+app.register_blueprint(score_bp, url_prefix='/score')
 
 api_key = "gdmg6kqp"
 

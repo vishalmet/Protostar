@@ -31,7 +31,7 @@ def add_user_to_db(username, user_wallet_address):
 
 def check_user_exists(username):
     """Function to check if a user exists in the database."""
-    user = users_collection.find_one({"username": username})
+    user = users_collection.find_one({"user_wallet_address": username})
     return user is not None
 
 def get_username_by_address(user_wallet_address):

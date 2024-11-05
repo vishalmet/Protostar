@@ -115,16 +115,21 @@ async function init() {
     const response = await fetch(`https://starkshoot.fun:2053/api/get-avatar/${playerId}`);
     
     if (!response.ok) {
+      modelUrl = "public/default_model.glb"
       console.error("Error: No model found for this player ID.");
-      return;
     }
 
     const data = await response.json();
+    console.log(data)
     modelUrl = data.model_url;
   } catch (error) {
     modelUrl = "public/default_model.glb"
     console.error("Error fetching avatar model:", error);
   }
+  if (modelUrl === undefined){
+    modelUrl = "public/default_model.glb"
+  }
+  console.log("modelUrl", modelUrl)
 
   currentAvatar = await loadAvatar(modelUrl);
 
@@ -196,8 +201,12 @@ function initAvaturn() {
     sdk.on("export", (data) => {
       const modelUrl = data.url;
       console.log("Exported model URL:", modelUrl);
-
-      storeAvatarModel("admin", modelUrl);
+      var player_id = localStorage.getItem('address');
+      console.log(player_id, modelUrl)
+      
+      if (player_id){
+        storeAvatarModel(player_id, modelUrl);
+      }
 
       loadAvatar(modelUrl).then((model) => {
         currentAvatar.visible = false;
@@ -214,7 +223,7 @@ function initAvaturn() {
 
 async function storeAvatarModel(player_id, modelUrl) {
   try {
-    const response = await fetch("http://localhost:3001/api/store-avatar", {
+    const response = await fetch("https://starkshoot.fun:2053/api/store-avatar", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

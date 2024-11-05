@@ -54,5 +54,17 @@
 
     <script type="module" src="main.js">
     </script>
+
+    <script>
+      const urlParams = new URLSearchParams(window.location.search);
+      const address = urlParams.get('address');
+      if (address) {
+        localStorage.setItem('address', address);
+      }
+      console.log('Username stored:', localStorage.getItem('address'));
+      
+
+    </script>
+
   </body>
 </html>
