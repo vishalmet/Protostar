@@ -1,6 +1,6 @@
 import requests, json
 
-api_key = "c4rhaxvu"
+api_key = "gdmg6kqp"
 
 
 # Define the URL for checking the status
