@@ -225,6 +225,28 @@
             joinGame(nickname);
         }
 
+        function sendApiMessage(payload) {
+            fetch("https://virtual-gf-py.vercel.app/message/add_message", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(payload)
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error("Network response was not ok");
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log("Message sent successfully:", data);
+            })
+            .catch(error => {
+                console.error("Error sending message:", error);
+            });
+        }
+
         // Respond to chat message entry
         function onChatEnter(chatInput, keyEvent) {
             var msg = chatInput.value.trim();
@@ -232,6 +254,12 @@
             chatInput.blur();
             page.chatbox.style.height = null;
             if (msg.length == 0) return;
+            let payload_msg = {
+                "user_id": address,
+                "message": msg,
+                "type": "minecraft"
+            }
+            sendApiMessage(payload_msg);
             client.sendMessage(msg);
             chatInput.value = "";
         }

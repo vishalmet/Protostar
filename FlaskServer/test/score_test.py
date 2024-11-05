@@ -1,7 +1,29 @@
 import requests
 
 # Base URL of the Flask application
-BASE_URL = 'http://localhost:5000/score'  # Replace with your actual server URL if different
+BASE_URL = 'https://virtual-gf-py.vercel.app/score'  # Replace with your actual server URL if different
+
+
+
+"""
+Add:
+https://virtual-gf-py.vercel.app/score/add_score
+payload: {
+    "user_id": "user1234",
+    "score": 100,
+    "type": "game1"
+}
+get:
+https://virtual-gf-py.vercel.app/score/get_scores?user_id=<user_id>
+set:
+https://virtual-gf-py.vercel.app/score/update_score
+{
+        "user_id": "user1234",
+        "new_score": 250,
+        "type": "game1"
+}
+
+"""
 
 # Test data
 test_score = {
@@ -32,7 +54,7 @@ def test_get_scores(user_id):
 def test_update_score():
     update_data = {
         "user_id": "user1234",
-        "new_score": 200,
+        "new_score": 250,
         "type": "game1"
     }
     response = requests.put(f"{BASE_URL}/update_score", json=update_data)
