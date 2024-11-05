@@ -272,7 +272,7 @@ BLOCK.FLOWER = {
     // }
 	{
 		if ( dir == DIRECTION.UP && lit )
-			return [ null , null, null, null ];
+			return [ 1/16, 3/16, 2/16, 4/16 ];
 
 		else if ( dir == DIRECTION.DOWN || !lit ) 
 			return [ 12/16, 0/16, 13/16, 1/16 ];
@@ -352,6 +352,52 @@ BLOCK.LIGHTGTREE = {
         return [ 15/16, 0/16, 16/16, 1/16 ];
     }
 };
+
+BLOCK.YELLOWFLOWER = {
+    id: 45,
+    spawnable: true,
+    transparent: true,
+    selflit: false,
+    gravity: false,
+    fluid: false,
+    texture: function( world, lightmap, lit, x, y, z, dir ) 
+	 {
+        return [ 13/16, 0/16, 14/16, 1/16 ];
+    }
+	// {
+	// 	if ( dir == DIRECTION.UP && lit )
+	// 		return [ 1/16, 3/16, 2/16, 4/16 ];
+
+	// 	else if ( dir == DIRECTION.DOWN || !lit ) 
+	// 		return [ 13/16, 0/16, 14/16, 1/16 ];
+	// 	else
+	// 		return [ 13/16, 0/16, 14/16, 1/16 ];
+	// }
+};
+
+BLOCK.BLUECOLOR = {
+    id: 46,
+    spawnable: true,
+    transparent: false,
+    selflit: false,
+    gravity: false,
+    fluid: false,
+    texture: function( world, lightmap, lit, x, y, z, dir ) {
+        return [ 0/16, 9/16, 1/16, 10/16 ];
+    }
+};
+BLOCK.GREENBRICK = {
+    id: 47,
+    spawnable: true,
+    transparent: false,
+    selflit: false,
+    gravity: false,
+    fluid: false,
+    texture: function( world, lightmap, lit, x, y, z, dir ) {
+        return [ 4/16, 2/16, 5/16, 3/16 ];
+    }
+};
+
 
 
 
