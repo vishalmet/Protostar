@@ -398,6 +398,90 @@ BLOCK.GREENBRICK = {
     }
 };
 
+BLOCK.RED = {
+    id: 47,
+    spawnable: true,
+    transparent: false,
+    selflit: false,
+    gravity: false,
+    fluid: false,
+    texture: function( world, lightmap, lit, x, y, z, dir ) {
+        return [ 1/16, 8/16, 2/16, 9/16 ];
+    }
+};
+
+BLOCK.PINK = {
+    id: 48,
+    spawnable: true,
+    transparent: false,
+    selflit: false,
+    gravity: false,
+    fluid: false,
+    texture: function( world, lightmap, lit, x, y, z, dir ) {
+        return [ 2/16, 8/16, 3/16, 9/16 ];
+    }
+};
+
+BLOCK.DGREEN = {
+    id: 49,
+    spawnable: true,
+    transparent: false,
+    selflit: false,
+    gravity: false,
+    fluid: false,
+    texture: function( world, lightmap, lit, x, y, z, dir ) {
+        return [ 1/16, 9/16, 2/16, 10/16 ];
+    }
+};
+
+BLOCK.LGREEN = {
+    id: 50,
+    spawnable: true,
+    transparent: false,
+    selflit: false,
+    gravity: false,
+    fluid: false,
+    texture: function( world, lightmap, lit, x, y, z, dir ) {
+        return [ 2/16, 9/16, 3/16, 10/16 ];
+    }
+};
+
+BLOCK.PURPLE = {
+    id: 51,
+    spawnable: true,
+    transparent: false,
+    selflit: false,
+    gravity: false,
+    fluid: false,
+    texture: function( world, lightmap, lit, x, y, z, dir ) {
+        return [ 1/16, 12/16, 2/16, 13/16 ];
+    }
+};
+
+BLOCK.ORANGE = {
+    id: 52,
+    spawnable: true,
+    transparent: false,
+    selflit: false,
+    gravity: false,
+    fluid: false,
+    texture: function( world, lightmap, lit, x, y, z, dir ) {
+        return [ 2/16, 13/16, 3/16, 14/16 ];
+    }
+};
+
+BLOCK.MAT = {
+    id: 52,
+    spawnable: true,
+    transparent: false,
+    selflit: false,
+    gravity: false,
+    fluid: false,
+    texture: function( world, lightmap, lit, x, y, z, dir ) {
+        return [ 6/16, 10/16, 7/16, 11/16 ];
+    }
+};
+
 
 
 
