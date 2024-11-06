@@ -399,7 +399,7 @@ BLOCK.GREENBRICK = {
 };
 
 BLOCK.RED = {
-    id: 47,
+    id: 54,
     spawnable: true,
     transparent: false,
     selflit: false,
@@ -471,7 +471,7 @@ BLOCK.ORANGE = {
 };
 
 BLOCK.MAT = {
-    id: 52,
+    id: 53,
     spawnable: true,
     transparent: false,
     selflit: false,
