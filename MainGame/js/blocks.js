@@ -482,6 +482,30 @@ BLOCK.MAT = {
     }
 };
 
+BLOCK.SMILEBLACK = {
+    id: 55,
+    spawnable: true,
+    transparent: false,
+    selflit: false,
+    gravity: false,
+    fluid: false,
+    texture: function( world, lightmap, lit, x, y, z, dir ) {
+        return [ 7/16, 7/16, 8/16, 8/16 ];
+    }
+};
+
+BLOCK.SMILE = {
+    id: 56,
+    spawnable: true,
+    transparent: false,
+    selflit: false,
+    gravity: false,
+    fluid: false,
+    texture: function( world, lightmap, lit, x, y, z, dir ) {
+        return [ 8/16, 8/16, 9/16, 9/16 ];
+    }
+};
+
 
 
 
