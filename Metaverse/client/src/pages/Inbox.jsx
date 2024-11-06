@@ -22,6 +22,7 @@ const Inbox = () => {
               <div className="font-semibold text-[#ffffff66]">{msg.name}</div>
               <span className="mx-2 text-gray-500">-</span>
               <div className="text-white">{msg.message}</div>
+              
             </div>
             <div className="text-sm text-gray-400">{msg.time}</div>
           </div>
