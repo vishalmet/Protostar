@@ -6,6 +6,7 @@ from routes.message_routes import message_bp
 from routes.points_routes import points_bp
 from routes.score_routes import score_bp
 from routes.score_history_routes import h_score_bp
+from routes.ai_message import ai_message_bp
 from flask_cors import CORS  # Import CORS
 
 app = Flask(__name__)
@@ -16,6 +17,7 @@ app.register_blueprint(message_bp, url_prefix='/message')
 app.register_blueprint(points_bp, url_prefix='/points')
 app.register_blueprint(score_bp, url_prefix='/score')
 app.register_blueprint(h_score_bp, url_prefix='/h_score_bp')
+app.register_blueprint(ai_message_bp, url_prefix='/ai')
 
 
 api_key = "gdmg6kqp"
