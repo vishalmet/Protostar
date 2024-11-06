@@ -16,7 +16,9 @@ prompt = '''
 # API key (you've already got it)
 # api_key = "2r4x3nfm"
 # api_key = "t6tzxw3n"
-api_key = "a5rt23sx"
+
+# api_key = "a5rt23sx"
+api_key = "inc57z1o"
 
 
 def extract_language_tag(text):
