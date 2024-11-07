@@ -505,6 +505,77 @@ BLOCK.SMILE = {
         return [ 8/16, 8/16, 9/16, 9/16 ];
     }
 };
+BLOCK.DOUBLE = {
+    id: 60,
+    spawnable: true,
+    transparent: false,
+    selflit: false,
+    gravity: false,
+    fluid: false,
+    texture: function( world, lightmap, lit, x, y, z, dir ) {
+        return [  5/16, 0/16, 6/16, 1/16 ];
+    }
+};
+
+BLOCK.BLUECHECKED = {
+    id: 57,
+    spawnable: true,
+    transparent: false,
+    selflit: false,
+    gravity: false,
+    fluid: false,
+    texture: function( world, lightmap, lit, x, y, z, dir ) {
+        return [ 2/16, 3/16, 3/16, 4/16 ];
+    }
+};
+
+BLOCK.REDCHECKED = {
+    id: 58,
+    spawnable: true,
+    transparent: false,
+    selflit: false,
+    gravity: false,
+    fluid: false,
+    texture: function( world, lightmap, lit, x, y, z, dir ) {
+        return [ 3/16, 3/16, 4/16, 4/16 ];
+    }
+};
+
+BLOCK.YELLOWCHECKED = {
+    id: 59,
+    spawnable: true,
+    transparent: false,
+    selflit: false,
+    gravity: false,
+    fluid: false,
+    texture: function( world, lightmap, lit, x, y, z, dir ) {
+        return [ 0/16, 2/16, 1/16, 3/16 ];
+    }
+};
+
+BLOCK.BROWNARROW = {
+    id: 61,
+    spawnable: true,
+    transparent: false,
+    selflit: false,
+    gravity: false,
+    fluid: false,
+    texture: function( world, lightmap, lit, x, y, z, dir ) {
+        return [ 3/16, 8/16, 4/16, 9/16 ];
+    }
+};
+
+BLOCK.REDARROW = {
+    id: 62,
+    spawnable: true,
+    transparent: false,
+    selflit: false,
+    gravity: false,
+    fluid: false,
+    texture: function( world, lightmap, lit, x, y, z, dir ) {
+        return [ 3/16, 9/16, 4/16, 10/16 ];
+    }
+};
 
 
 
