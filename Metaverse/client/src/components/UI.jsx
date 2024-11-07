@@ -216,9 +216,16 @@ export const UI = () => {
     if (chatMessage.length > 0) {
         console.log("cm", chatMessage);
         setLoading(true); // Start loading when the request is sent
+        
+        // Determine the correct URL based on the presence of "@user" in chatMessage
+        const apiUrl = chatMessage.includes("@user") 
+            ? "https://virtual-gf-py.vercel.app/sofi/chat" 
+            : "https://virtual-gf-py.vercel.app/ai/ai-chat";
+        console.log(apiUrl);
+        
         try {
-            // Send the message to the API and get the response
-            const response = await fetch("https://virtual-gf-py.vercel.app/ai/ai-chat", {
+            // Send the message to the selected API URL and get the response
+            const response = await fetch(apiUrl, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -245,6 +252,7 @@ export const UI = () => {
         }
     }
 };
+
 
   const playerId = localStorage.getItem('userid');
 
