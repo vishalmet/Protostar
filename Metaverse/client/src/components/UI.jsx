@@ -182,7 +182,7 @@ export const UI = () => {
 
   const fetchData = async () => {
     try {
-      const response = await fetch(`http://localhost:5000/points/get_points/${usersname}`);
+      const response = await fetch(`https://virtual-gf-py.vercel.app/sofi/chat/get_points/${usersname}`);
       if (response.ok) {
         const data = await response.json();
         setGold(data.points.gold);
