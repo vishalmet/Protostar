@@ -59,10 +59,10 @@ def chatbot():
         conversation_data = generate_conversation(api_key, user_input)
         
         # Extract the suggestion from the response
-        response = conversation_data.get("suggestion", "I'm not sure how to respond to that. Can you ask me something else?")
+        # response = conversation_data.get("suggestion", "I'm not sure how to respond to that. Can you ask me something else?")
         
         # Display the chatbot response
-        print(f"Chatbot: {response}")
+        print(f"Chatbot: {conversation_data}")
 
 # Run the chatbot
 if __name__ == "__main__":
