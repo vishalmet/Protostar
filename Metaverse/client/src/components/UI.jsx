@@ -84,17 +84,55 @@ export const UI = () => {
   const [walletAddress, setWalletAddress] = useState('');
   const [gold, setGold] = useState(0);
   const [diamond, setDiamond] = useState(0);
-  const [useridd, setUseridd] = useState('');
+  const [usersname, setUsersname] = useState('');
   const [avatarMode, setAvatarMode] = useState(false);
   const [avatarUrl, setAvatarUrl] = useAtom(avatarUrlAtom);
   const [roomID, setRoomID] = useAtom(roomIDAtom);
   const [passwordCorrectForRoom, setPasswordCorrectForRoom] = useState(false);
   const navigate = useNavigate();
 
+  useEffect(() => {
+    // Get the user ID from localStorage
+    const userid = localStorage.getItem('userid');
+    
+    // Set wallet address and username from user ID
+    setWalletAddress(userid);
+    console.log("userid", userid);
+
+    // Define the async function for the API call
+    const fetchUsernameByWallet = async () => {
+      try {
+        // Fetch the username based on the user_wallet_address
+        const response = await fetch(`https://virtual-gf-py.vercel.app/user/get_username_by_address?user_wallet_address=${userid}`);
+
+        if (!response.ok) {
+          throw new Error('Failed to fetch the address from the server.');
+        }
+
+        const data = await response.json();
+
+        if (data.username) {
+          // Set the username if it exists
+          setUsersname(data.username);
+          console.log(data.username);
+        } else {
+          console.log("Username not found");
+        }
+      } catch (error) {
+        console.error("Error fetching username:", error);
+      }
+    };
+
+    // Call the async function
+    if (userid) {
+      fetchUsernameByWallet();
+    }
+  }, []); 
+
   const handleRedirect = async () => {
     // Get the `userid` from localStorage
     const userid = localStorage.getItem('userid');
-    setUseridd(userid);
+    console.log("userid",userid);
     if (userid) {
       try {
         // Call the API to get the user address
@@ -108,7 +146,7 @@ export const UI = () => {
 
         if (data.username) {
           const address = data.username;
-          setWalletAddress(address);
+          
           console.log("add", address);
           window.location.href = `https://starkshoot.fun/multiplayer.html?username=${address}&address=${userid}`;
           console.log(`https://starkshoot.fun/multiplayer.html?username=${address}&address=${userid}`);
@@ -144,7 +182,7 @@ export const UI = () => {
 
   const fetchData = async () => {
     try {
-      const response = await fetch(`/get_points/${useridd}`);
+      const response = await fetch(`http://localhost:5000/points/get_points/${usersname}`);
       if (response.ok) {
         const data = await response.json();
         setGold(data.points.gold);
