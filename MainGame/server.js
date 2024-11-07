@@ -6,13 +6,13 @@
 // ==========================================
 
 // Parameters
-var WORLD_SX = 128;
-var WORLD_SY = 128;
+var WORLD_SX = 170;
+var WORLD_SY = 170;
 var WORLD_SZ = 32;
 var WORLD_GROUNDHEIGHT = 16;
 var SECONDS_BETWEEN_SAVES = 60;
 var ADMIN_IP = "";
-const WORLD_NAME = "world2"; // Name for world in MongoDB
+const WORLD_NAME = "world14"; // Name for world in MongoDB
 const PLAYER_ID = "admin"; // Player ID for tracking in MongoDB
 
 // Load modules

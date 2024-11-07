@@ -272,7 +272,7 @@ BLOCK.FLOWER = {
     // }
 	{
 		if ( dir == DIRECTION.UP && lit )
-			return [ null , null, null, null ];
+			return [ 1/16, 3/16, 2/16, 4/16 ];
 
 		else if ( dir == DIRECTION.DOWN || !lit ) 
 			return [ 12/16, 0/16, 13/16, 1/16 ];
@@ -352,6 +352,160 @@ BLOCK.LIGHTGTREE = {
         return [ 15/16, 0/16, 16/16, 1/16 ];
     }
 };
+
+BLOCK.YELLOWFLOWER = {
+    id: 45,
+    spawnable: true,
+    transparent: true,
+    selflit: false,
+    gravity: false,
+    fluid: false,
+    texture: function( world, lightmap, lit, x, y, z, dir ) 
+	 {
+        return [ 13/16, 0/16, 14/16, 1/16 ];
+    }
+	// {
+	// 	if ( dir == DIRECTION.UP && lit )
+	// 		return [ 1/16, 3/16, 2/16, 4/16 ];
+
+	// 	else if ( dir == DIRECTION.DOWN || !lit ) 
+	// 		return [ 13/16, 0/16, 14/16, 1/16 ];
+	// 	else
+	// 		return [ 13/16, 0/16, 14/16, 1/16 ];
+	// }
+};
+
+BLOCK.BLUECOLOR = {
+    id: 46,
+    spawnable: true,
+    transparent: false,
+    selflit: false,
+    gravity: false,
+    fluid: false,
+    texture: function( world, lightmap, lit, x, y, z, dir ) {
+        return [ 0/16, 9/16, 1/16, 10/16 ];
+    }
+};
+BLOCK.GREENBRICK = {
+    id: 47,
+    spawnable: true,
+    transparent: false,
+    selflit: false,
+    gravity: false,
+    fluid: false,
+    texture: function( world, lightmap, lit, x, y, z, dir ) {
+        return [ 4/16, 2/16, 5/16, 3/16 ];
+    }
+};
+
+BLOCK.RED = {
+    id: 54,
+    spawnable: true,
+    transparent: false,
+    selflit: false,
+    gravity: false,
+    fluid: false,
+    texture: function( world, lightmap, lit, x, y, z, dir ) {
+        return [ 1/16, 8/16, 2/16, 9/16 ];
+    }
+};
+
+BLOCK.PINK = {
+    id: 48,
+    spawnable: true,
+    transparent: false,
+    selflit: false,
+    gravity: false,
+    fluid: false,
+    texture: function( world, lightmap, lit, x, y, z, dir ) {
+        return [ 2/16, 8/16, 3/16, 9/16 ];
+    }
+};
+
+BLOCK.DGREEN = {
+    id: 49,
+    spawnable: true,
+    transparent: false,
+    selflit: false,
+    gravity: false,
+    fluid: false,
+    texture: function( world, lightmap, lit, x, y, z, dir ) {
+        return [ 1/16, 9/16, 2/16, 10/16 ];
+    }
+};
+
+BLOCK.LGREEN = {
+    id: 50,
+    spawnable: true,
+    transparent: false,
+    selflit: false,
+    gravity: false,
+    fluid: false,
+    texture: function( world, lightmap, lit, x, y, z, dir ) {
+        return [ 2/16, 9/16, 3/16, 10/16 ];
+    }
+};
+
+BLOCK.PURPLE = {
+    id: 51,
+    spawnable: true,
+    transparent: false,
+    selflit: false,
+    gravity: false,
+    fluid: false,
+    texture: function( world, lightmap, lit, x, y, z, dir ) {
+        return [ 1/16, 12/16, 2/16, 13/16 ];
+    }
+};
+
+BLOCK.ORANGE = {
+    id: 52,
+    spawnable: true,
+    transparent: false,
+    selflit: false,
+    gravity: false,
+    fluid: false,
+    texture: function( world, lightmap, lit, x, y, z, dir ) {
+        return [ 2/16, 13/16, 3/16, 14/16 ];
+    }
+};
+
+BLOCK.MAT = {
+    id: 53,
+    spawnable: true,
+    transparent: false,
+    selflit: false,
+    gravity: false,
+    fluid: false,
+    texture: function( world, lightmap, lit, x, y, z, dir ) {
+        return [ 6/16, 10/16, 7/16, 11/16 ];
+    }
+};
+
+BLOCK.SMILEBLACK = {
+    id: 55,
+    spawnable: true,
+    transparent: false,
+    selflit: false,
+    gravity: false,
+    fluid: false,
+    texture: function( world, lightmap, lit, x, y, z, dir ) {
+        return [ 7/16, 7/16, 8/16, 8/16 ];
+    }
+};
+
+BLOCK.SMILE = {
+    id: 56,
+    spawnable: true,
+    transparent: false,
+    selflit: false,
+    gravity: false,
+    fluid: false,
+    texture: function( world, lightmap, lit, x, y, z, dir ) {
+        return [ 8/16, 8/16, 9/16, 9/16 ];
+    }
+};
+
 
 
 

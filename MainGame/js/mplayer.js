@@ -176,7 +176,8 @@ Player.prototype.doBlockAction = function( x, y, destroy ) {
         var obj = this.client ? this.client : this.world;
 
         // Check if player is allowed to place a block based on x-position
-        if (this.pos.x <= 75) {
+        //if (this.pos.x <= 75) {
+        if (true) {
             if (destroy) {
                 obj.setBlock(block.x, block.y, block.z, BLOCK.AIR); // Destroy block
                 console.log("Block destroyed.");
