@@ -149,12 +149,37 @@ export const UI = () => {
 
   const ref = useRef();
   const [chatMessage, setChatMessage] = useState("");
-  const sendChatMessage = () => {
+  const sendChatMessage = async () => {
     if (chatMessage.length > 0) {
-      socket.emit("chatMessage", chatMessage);
-      setChatMessage("");
+      console.log("cm",chatMessage)
+        try {
+            // Send the message to the API and get the response
+            const response = await fetch("https://virtual-gf-py.vercel.app/ai/ai-chat", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ message: chatMessage }),
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                console.log("data",data);
+                
+                // Emit the response received from the API to the socket
+                socket.emit("chatMessage", data.reply_content);
+
+                // Clear the chat message input
+                setChatMessage("");
+            } else {
+                console.error("Failed to send message to API. Status:", response.status);
+            }
+        } catch (error) {
+            console.error("Error while sending message to API:", error);
+        }
     }
-  };
+};
+
   const playerId = localStorage.getItem('userid');
 
   useEffect(() => {
