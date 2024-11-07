@@ -84,7 +84,7 @@ export const UI = () => {
   const [walletAddress, setWalletAddress] = useState('');
   const [gold, setGold] = useState(0);
   const [diamond, setDiamond] = useState(0);
-  const [usersname, setUsersname] = useState('');
+  const [walletAddress, setwalletAddress] = useState('');
   const [avatarMode, setAvatarMode] = useState(false);
   const [avatarUrl, setAvatarUrl] = useAtom(avatarUrlAtom);
   const [roomID, setRoomID] = useAtom(roomIDAtom);
@@ -113,7 +113,7 @@ export const UI = () => {
 
         if (data.username) {
           // Set the username if it exists
-          setUsersname(data.username);
+          setwalletAddress(data.username);
           console.log(data.username);
         } else {
           console.log("Username not found");
@@ -182,7 +182,7 @@ export const UI = () => {
 
   const fetchData = async () => {
     try {
-      const response = await fetch(`https://virtual-gf-py.vercel.app/sofi/chat/get_points/${usersname}`);
+      const response = await fetch(`https://virtual-gf-py.vercel.app/sofi/chat/get_points/${walletAddress}`);
       if (response.ok) {
         const data = await response.json();
         setGold(data.points.gold);
