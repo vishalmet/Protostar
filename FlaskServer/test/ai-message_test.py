@@ -6,6 +6,7 @@ url = 'https://virtual-gf-py.vercel.app/ai/ai-chat'
 # Sample test data
 test_data = {
     "message": "@sofi give me the joke"
+    # "message": "@cg hlo hru"
 }
 
 # Sending a POST request to the Flask endpoint
@@ -20,3 +21,4 @@ if response.status_code == 200:
 else:
     print(f"Failed to get a valid response. Status code: {response.status_code}")
     print(response.text)
+

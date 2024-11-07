@@ -5,7 +5,7 @@ ai_message_bp = Blueprint('ai_message_bp', __name__)
 
 
 
-api_key = "inc57z1o"
+api_key = "rq30lajn"
 
 def extract_language_tag(text):
     # Use regex to find the language tag pattern like '@tt-<language>'
