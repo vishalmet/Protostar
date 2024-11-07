@@ -81,6 +81,10 @@ export const UI = () => {
   );
   const [_roomItems, setRoomItems] = useAtom(roomItemsAtom);
   const [passwordMode, setPasswordMode] = useState(false);
+  const [walletAddress, setWalletAddress] = useState('');
+  const [gold, setGold] = useState(0);
+  const [diamond, setDiamond] = useState(0);
+  const [useridd, setUseridd] = useState('');
   const [avatarMode, setAvatarMode] = useState(false);
   const [avatarUrl, setAvatarUrl] = useAtom(avatarUrlAtom);
   const [roomID, setRoomID] = useAtom(roomIDAtom);
@@ -90,7 +94,7 @@ export const UI = () => {
   const handleRedirect = async () => {
     // Get the `userid` from localStorage
     const userid = localStorage.getItem('userid');
-
+    setUseridd(userid);
     if (userid) {
       try {
         // Call the API to get the user address
@@ -104,6 +108,7 @@ export const UI = () => {
 
         if (data.username) {
           const address = data.username;
+          setWalletAddress(address);
           console.log("add", address);
           window.location.href = `https://starkshoot.fun/multiplayer.html?username=${address}&address=${userid}`;
           console.log(`https://starkshoot.fun/multiplayer.html?username=${address}&address=${userid}`);
@@ -135,6 +140,26 @@ export const UI = () => {
       navigate('/');
     }
   };
+
+
+  const fetchData = async () => {
+    try {
+      const response = await fetch(`/get_points/${useridd}`);
+      if (response.ok) {
+        const data = await response.json();
+        setGold(data.points.gold);
+        setDiamond(data.points.diamond);
+      } else {
+        console.error("Error fetching points:", response.statusText);
+      }
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+  useEffect(() => {
+    fetchData();
+  }, []);
+
 
 
   const leaveRoom = () => {
@@ -295,7 +320,7 @@ export const UI = () => {
                     style={{ width: `${(40 / 100) * 100}%` }}
                   ></div> */}
                   <div className="absolute inset-0 flex justify-center items-center bg-yellow-400 text-black font-bold">
-                    40
+                    {gold}
                   </div>
                 </div>
 
@@ -316,7 +341,7 @@ export const UI = () => {
                     style={{ width: `${(40 / 100) * 100}%` }}
                   ></div> */}
                   <div className="absolute inset-0 flex justify-center items-center  bg-blue-400 text-black font-bold">
-                    40
+                  {diamond}
                   </div>
                 </div>
 
@@ -333,9 +358,10 @@ export const UI = () => {
               <div className="flex items-center space-x-2 relative">
                 <div className="relative w-52 h-6 bg-gray-200 rounded-md overflow-hidden">
 
-                  <div className="absolute inset-0 flex justify-center items-center bg-slate-400 text-black font-bold">
-                  0xa23....CE8
-                  </div>
+                <div className="absolute inset-0 flex justify-center items-center bg-slate-400 text-black font-bold">
+                  {walletAddress || "No wallet connected"}
+                </div>
+
                 </div>
 
                 <div
