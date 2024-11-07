@@ -6,6 +6,7 @@ from routes.message_routes import message_bp
 from routes.points_routes import points_bp
 from routes.score_routes import score_bp
 from routes.score_history_routes import h_score_bp
+from routes.sofi_main import sofi_ai_message_bp
 from routes.ai_message import ai_message_bp
 from flask_cors import CORS  # Import CORS
 
@@ -18,6 +19,7 @@ app.register_blueprint(points_bp, url_prefix='/points')
 app.register_blueprint(score_bp, url_prefix='/score')
 app.register_blueprint(h_score_bp, url_prefix='/h_score_bp')
 app.register_blueprint(ai_message_bp, url_prefix='/ai')
+app.register_blueprint(sofi_ai_message_bp, url_prefix='/sofi')
 
 
 api_key = "gdmg6kqp"
@@ -39,7 +41,7 @@ def generate_conversation(user_input):
 @app.route("/chat", methods=["POST"])
 def chat():
     user_input = request.json.get("message")
-    
+
     if not user_input:
         return jsonify({"error": "No message provided"}), 400
     
