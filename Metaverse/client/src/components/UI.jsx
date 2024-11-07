@@ -84,7 +84,6 @@ export const UI = () => {
   const [walletAddress, setWalletAddress] = useState('');
   const [gold, setGold] = useState(0);
   const [diamond, setDiamond] = useState(0);
-  const [walletAddress, setwalletAddress] = useState('');
   const [avatarMode, setAvatarMode] = useState(false);
   const [avatarUrl, setAvatarUrl] = useAtom(avatarUrlAtom);
   const [roomID, setRoomID] = useAtom(roomIDAtom);
