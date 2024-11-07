@@ -237,12 +237,12 @@
                 if (!response.ok) {
                     throw new Error("Network response was not ok");
                 }
-                return response.json();
+                return response.json(); 
             })
             .then(data => {
                 console.log("Message sent successfully:", data);
             })
-            .catch(error => {
+            .catch(error => { 
                 console.error("Error sending message:", error);
             });
         }
