@@ -31,7 +31,6 @@ def generate_conversation(user_input):
 
     response = requests.post(url, json=json_data)
     return response.json()
-
 @ai_message_bp.route("/ai-chat", methods=["POST"])
 def chat():
     user_input = request.json.get("message")
@@ -50,23 +49,21 @@ def chat():
         return jsonify({"error": "No valid response from external API"}), 500
     
     try:
-        # Ensure proper JSON formatting by replacing single quotes and handling newlines
-        response = response.replace("'", '"').replace("\n", "").strip()
+        # Ensure proper JSON formatting by escaping only unquoted keys
+        # Only convert keys that are not quoted (not inside values)
+        response = response.replace("\n", "").strip()
+        response = re.sub(r'(?<=[:,\s{])\'(\w+)\'(?=:)', r'"\1"', response)
         
-        # Add quotes to unquoted keys using regex
-        response = re.sub(r'(?<!")(\b\w+\b)(?!"):', r'"\1":', response)
+        # Remove trailing commas and ` ```json ` tags if present
+        response = re.sub(r',\s*([}\]])', r'\1', response)
+        response = response.replace("```json", "").replace("```", "").strip()
 
-        # Handle trailing commas
-        response = response.replace(",}", "}").replace(",]", "]")
-        
-        if '```json' in response:
-            response = re.sub(r'```json|```', '', response).strip()
-
+        # Debug formatted response
         print("Formatted response for parsing:", response, type(response))
         
-        # Parse formatted response with `strict=False` to handle non-ASCII characters like emojis
+        # Parse formatted response with `strict=False` to handle special characters
         res = json.loads(response, strict=False)
-        print(res)
+        
         return jsonify(res)
     except json.JSONDecodeError as e:
         print("JSON parsing error:", e)

@@ -5,7 +5,7 @@ url = 'https://virtual-gf-py.vercel.app/ai/ai-chat'
 
 # Sample test data
 test_data = {
-    "message": "@tt-hindi im from chennai"
+    "message": "@sofi give me the joke"
 }
 
 # Sending a POST request to the Flask endpoint
