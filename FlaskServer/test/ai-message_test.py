@@ -1,7 +1,8 @@
 import requests
 
 # URL of the Flask server endpoint
-url = 'https://virtual-gf-py.vercel.app/ai/ai-chat'
+# url = 'https://virtual-gf-py.vercel.app/ai/ai-chat'
+url = 'https://virtual-gf-py.vercel.app/sofi/chat'
 
 # Sample test data
 test_data = {

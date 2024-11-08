@@ -14,3 +14,5 @@
 
 example link🔗: http://localhost/multiplayer.html?username=john_doe&address=asde2wses2eh4u4dhsds
  
+
+Leads => custom_company

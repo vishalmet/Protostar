@@ -31,6 +31,8 @@ def generate_conversation(user_input):
     # Return the JSON response
     return response.json()
 
+
+
 # Step 3: Chatbot conversation loop
 def chatbot():
     print("Chatbot: Hello! Let's have a chat. Ask me anything!")

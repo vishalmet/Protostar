@@ -81,16 +81,57 @@ export const UI = () => {
   );
   const [_roomItems, setRoomItems] = useAtom(roomItemsAtom);
   const [passwordMode, setPasswordMode] = useState(false);
+  const [walletAddress, setWalletAddress] = useState('');
+  const [gold, setGold] = useState(0);
+  const [diamond, setDiamond] = useState(0);
   const [avatarMode, setAvatarMode] = useState(false);
   const [avatarUrl, setAvatarUrl] = useAtom(avatarUrlAtom);
   const [roomID, setRoomID] = useAtom(roomIDAtom);
   const [passwordCorrectForRoom, setPasswordCorrectForRoom] = useState(false);
   const navigate = useNavigate();
 
+  useEffect(() => {
+    // Get the user ID from localStorage
+    const userid = localStorage.getItem('userid');
+    
+    // Set wallet address and username from user ID
+    setWalletAddress(userid);
+    console.log("userid", userid);
+
+    // Define the async function for the API call
+    const fetchUsernameByWallet = async () => {
+      try {
+        // Fetch the username based on the user_wallet_address
+        const response = await fetch(`https://virtual-gf-py.vercel.app/user/get_username_by_address?user_wallet_address=${userid}`);
+
+        if (!response.ok) {
+          throw new Error('Failed to fetch the address from the server.');
+        }
+
+        const data = await response.json();
+
+        if (data.username) {
+          // Set the username if it exists
+          setwalletAddress(data.username);
+          console.log(data.username);
+        } else {
+          console.log("Username not found");
+        }
+      } catch (error) {
+        console.error("Error fetching username:", error);
+      }
+    };
+
+    // Call the async function
+    if (userid) {
+      fetchUsernameByWallet();
+    }
+  }, []); 
+
   const handleRedirect = async () => {
     // Get the `userid` from localStorage
     const userid = localStorage.getItem('userid');
-
+    console.log("userid",userid);
     if (userid) {
       try {
         // Call the API to get the user address
@@ -104,6 +145,7 @@ export const UI = () => {
 
         if (data.username) {
           const address = data.username;
+          
           console.log("add", address);
           window.location.href = `https://starkshoot.fun/multiplayer.html?username=${address}&address=${userid}`;
           console.log(`https://starkshoot.fun/multiplayer.html?username=${address}&address=${userid}`);
@@ -135,6 +177,26 @@ export const UI = () => {
       navigate('/');
     }
   };
+
+
+  const fetchData = async () => {
+    try {
+      const response = await fetch(`https://virtual-gf-py.vercel.app/get_points/${walletAddress}`);
+      if (response.ok) {
+        const data = await response.json();
+        setGold(data.points.gold);
+        setDiamond(data.points.diamond);
+      } else {
+        console.error("Error fetching points:", response.statusText);
+      }
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+  useEffect(() => {
+    fetchData();
+  }, []);
+
 
 
   const leaveRoom = () => {
@@ -183,6 +245,8 @@ export const UI = () => {
         }
     }
 };
+
+
 
   const playerId = localStorage.getItem('userid');
 
@@ -295,7 +359,7 @@ export const UI = () => {
                     style={{ width: `${(40 / 100) * 100}%` }}
                   ></div> */}
                   <div className="absolute inset-0 flex justify-center items-center bg-yellow-400 text-black font-bold">
-                    40
+                    {gold}
                   </div>
                 </div>
 
@@ -316,7 +380,7 @@ export const UI = () => {
                     style={{ width: `${(40 / 100) * 100}%` }}
                   ></div> */}
                   <div className="absolute inset-0 flex justify-center items-center  bg-blue-400 text-black font-bold">
-                    40
+                  {diamond}
                   </div>
                 </div>
 
@@ -333,9 +397,11 @@ export const UI = () => {
               <div className="flex items-center space-x-2 relative">
                 <div className="relative w-52 h-6 bg-gray-200 rounded-md overflow-hidden">
 
-                  <div className="absolute inset-0 flex justify-center items-center bg-slate-400 text-black font-bold">
-                  0xa23....CE8
-                  </div>
+                <div className="absolute inset-0 flex justify-center items-center bg-slate-400 text-black font-bold">
+                  {walletAddress ? `${walletAddress.slice(0, 4)}...${walletAddress.slice(-3)}` : "No wallet connected"}
+                </div>
+
+
                 </div>
 
                 <div

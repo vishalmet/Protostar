@@ -141,7 +141,7 @@
 /* GF Css */
 
 
-#iframePopup, #iframePopupStarkShoot {
+#iframePopup, #iframePopupStarkShoot, #iframePopupBall, #iframePopupExtra, #iframePopupRunner {
     position: fixed;
     top: 50%;
     left: 50%;
