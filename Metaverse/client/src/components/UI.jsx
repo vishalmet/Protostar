@@ -216,16 +216,9 @@ export const UI = () => {
     if (chatMessage.length > 0) {
         console.log("cm", chatMessage);
         setLoading(true); // Start loading when the request is sent
-        
-        // Determine the correct URL based on the presence of "@user" in chatMessage
-        const apiUrl = chatMessage.includes("@user") 
-            ? "https://virtual-gf-py.vercel.app/sofi/chat" 
-            : "https://virtual-gf-py.vercel.app/ai/ai-chat";
-        console.log(apiUrl);
-        
         try {
-            // Send the message to the selected API URL and get the response
-            const response = await fetch(apiUrl, {
+            // Send the message to the API and get the response
+            const response = await fetch("https://virtual-gf-py.vercel.app/ai/ai-chat", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -252,6 +245,7 @@ export const UI = () => {
         }
     }
 };
+
 
 
   const playerId = localStorage.getItem('userid');
@@ -404,8 +398,9 @@ export const UI = () => {
                 <div className="relative w-52 h-6 bg-gray-200 rounded-md overflow-hidden">
 
                 <div className="absolute inset-0 flex justify-center items-center bg-slate-400 text-black font-bold">
-                  {walletAddress || "No wallet connected"}
+                  {walletAddress ? `${walletAddress.slice(0, 4)}...${walletAddress.slice(-3)}` : "No wallet connected"}
                 </div>
+
 
                 </div>
 
