@@ -95,7 +95,7 @@ def generate_conversation():
             Important: if user ask about user data dont ask "can i give" like that dont ask any of the question. if they ask give them that directly. 
             ------------------------------------------------------------------------------------------------------------------
             user data:
-            current user's current game score: Please play the game and update the scores is not yet,
+            current user's current game score: {test_get_scores(user_id)},
             list of users recent [interactions, connections, peoples]: {test_get_recent_interacted_users()},
             list of users past lifetime [interactions, connections, peoples]: {test_get_lifetime_interacted_users()},
             current user's history of game score: {test_get_scores_history(user_id, score_type)},

@@ -1,7 +1,7 @@
 import requests
 
 # Define the base URL for the Flask server
-BASE_URL = "http://localhost:5000/sofi"
+BASE_URL = "https://virtual-gf-py.vercel.app/sofi"
 
 def test_sofi_chat():
     # Sample payload to test the chat endpoint
