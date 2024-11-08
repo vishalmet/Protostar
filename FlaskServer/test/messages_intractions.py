@@ -1,6 +1,7 @@
 import requests
 
 BASE_URL = 'http://localhost:5000/message'
+BASE_URL = 'https://virtual-gf-py.vercel.app/message'
 # BASE_URL = 'http://localhost:5000/message/get_messages'
 
 # Test data

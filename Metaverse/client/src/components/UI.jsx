@@ -149,12 +149,41 @@ export const UI = () => {
 
   const ref = useRef();
   const [chatMessage, setChatMessage] = useState("");
-  const sendChatMessage = () => {
+  const [loading, setLoading] = useState(false);
+  const sendChatMessage = async () => {
     if (chatMessage.length > 0) {
-      socket.emit("chatMessage", chatMessage);
-      setChatMessage("");
+        console.log("cm", chatMessage);
+        setLoading(true); // Start loading when the request is sent
+        try {
+            // Send the message to the API and get the response
+            const response = await fetch("https://virtual-gf-py.vercel.app/ai/ai-chat", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ message: chatMessage }),
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                console.log("data", data);
+                
+                // Emit the response received from the API to the socket
+                socket.emit("chatMessage", data.reply_content + " B:" + data.behavior  + ", E:" + data.emotion);
+
+                // Clear the chat message input
+                setChatMessage("");
+            } else {
+                console.error("Failed to send message to API. Status:", response.status);
+            }
+        } catch (error) {
+            console.error("Error while sending message to API:", error);
+        } finally {
+            setLoading(false); // Stop loading when the request completes
+        }
     }
-  };
+};
+
   const playerId = localStorage.getItem('userid');
 
   useEffect(() => {
@@ -324,22 +353,50 @@ export const UI = () => {
           <div className="fixed inset-4 flex items-center justify-end flex-col pointer-events-none select-none">
             {roomID && !shopMode && !buildMode && (
               <div className="pointer-events-auto p-4 flex items-center space-x-4">
-                <input
-                  type="text"
-                  className="w-56 border px-5 p-4 h-full rounded-full"
-                  placeholder="Message..."
-                  onKeyDown={(e) => {
-                    if (e.key === "Enter") {
-                      sendChatMessage();
-                    }
-                  }}
-                  value={chatMessage}
-                  onChange={(e) => setChatMessage(e.target.value)}
-                />
-                <button
-                  className="p-4 rounded-full bg-slate-500 text-white drop-shadow-md cursor-pointer hover:bg-slate-800 transition-colors"
-                  onClick={sendChatMessage}
-                >
+              <input
+                type="text"
+                className="w-56 border px-5 p-4 h-full rounded-full"
+                placeholder="Message..."
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    sendChatMessage();
+                  }
+                }}
+                value={chatMessage}
+                onChange={(e) => setChatMessage(e.target.value)}
+              />
+              
+              <button
+                className={`p-4 rounded-full drop-shadow-md cursor-pointer transition-colors flex items-center justify-center ${
+                  loading ? "bg-slate-400 cursor-not-allowed" : "bg-slate-500 hover:bg-slate-800 text-white"
+                }`}
+                onClick={sendChatMessage}
+                disabled={loading} // Disable button when loading
+              >
+                {loading ? (
+                  // Loader animation (Spinner SVG)
+                  <svg
+                    className="animate-spin h-6 w-6 text-white"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                  >
+                    <circle
+                      className="opacity-25"
+                      cx="12"
+                      cy="12"
+                      r="10"
+                      stroke="currentColor"
+                      strokeWidth="4"
+                    ></circle>
+                    <path
+                      className="opacity-75"
+                      fill="currentColor"
+                      d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"
+                    ></path>
+                  </svg>
+                ) : (
+                  // Send Icon
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
@@ -354,8 +411,10 @@ export const UI = () => {
                       d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5"
                     />
                   </svg>
-                </button>
-              </div>
+                )}
+              </button>
+            </div>
+            
             )}
             <div className="flex items-center space-x-4 pointer-events-auto">
               {roomID && !shopMode && !buildMode && (
