@@ -81,16 +81,57 @@ export const UI = () => {
   );
   const [_roomItems, setRoomItems] = useAtom(roomItemsAtom);
   const [passwordMode, setPasswordMode] = useState(false);
+  const [walletAddress, setWalletAddress] = useState('');
+  const [gold, setGold] = useState(0);
+  const [diamond, setDiamond] = useState(0);
   const [avatarMode, setAvatarMode] = useState(false);
   const [avatarUrl, setAvatarUrl] = useAtom(avatarUrlAtom);
   const [roomID, setRoomID] = useAtom(roomIDAtom);
   const [passwordCorrectForRoom, setPasswordCorrectForRoom] = useState(false);
   const navigate = useNavigate();
 
+  useEffect(() => {
+    // Get the user ID from localStorage
+    const userid = localStorage.getItem('userid');
+    
+    // Set wallet address and username from user ID
+    setWalletAddress(userid);
+    console.log("userid", userid);
+
+    // Define the async function for the API call
+    const fetchUsernameByWallet = async () => {
+      try {
+        // Fetch the username based on the user_wallet_address
+        const response = await fetch(`https://virtual-gf-py.vercel.app/user/get_username_by_address?user_wallet_address=${userid}`);
+
+        if (!response.ok) {
+          throw new Error('Failed to fetch the address from the server.');
+        }
+
+        const data = await response.json();
+
+        if (data.username) {
+          // Set the username if it exists
+          setwalletAddress(data.username);
+          console.log(data.username);
+        } else {
+          console.log("Username not found");
+        }
+      } catch (error) {
+        console.error("Error fetching username:", error);
+      }
+    };
+
+    // Call the async function
+    if (userid) {
+      fetchUsernameByWallet();
+    }
+  }, []); 
+
   const handleRedirect = async () => {
     // Get the `userid` from localStorage
     const userid = localStorage.getItem('userid');
-
+    console.log("userid",userid);
     if (userid) {
       try {
         // Call the API to get the user address
@@ -104,6 +145,7 @@ export const UI = () => {
 
         if (data.username) {
           const address = data.username;
+          
           console.log("add", address);
           window.location.href = `https://starkshoot.fun/multiplayer.html?username=${address}&address=${userid}`;
           console.log(`https://starkshoot.fun/multiplayer.html?username=${address}&address=${userid}`);
@@ -137,6 +179,26 @@ export const UI = () => {
   };
 
 
+  const fetchData = async () => {
+    try {
+      const response = await fetch(`https://virtual-gf-py.vercel.app/get_points/${walletAddress}`);
+      if (response.ok) {
+        const data = await response.json();
+        setGold(data.points.gold);
+        setDiamond(data.points.diamond);
+      } else {
+        console.error("Error fetching points:", response.statusText);
+      }
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+
+
   const leaveRoom = () => {
     socket.emit("leaveRoom");
     setRoomID(null);
@@ -154,9 +216,16 @@ export const UI = () => {
     if (chatMessage.length > 0) {
         console.log("cm", chatMessage);
         setLoading(true); // Start loading when the request is sent
+        
+        // Determine the correct URL based on the presence of "@user" in chatMessage
+        const apiUrl = chatMessage.includes("@user") 
+            ? "https://virtual-gf-py.vercel.app/sofi/chat" 
+            : "https://virtual-gf-py.vercel.app/ai/ai-chat";
+        console.log(apiUrl);
+        
         try {
-            // Send the message to the API and get the response
-            const response = await fetch("https://virtual-gf-py.vercel.app/ai/ai-chat", {
+            // Send the message to the selected API URL and get the response
+            const response = await fetch(apiUrl, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -183,6 +252,7 @@ export const UI = () => {
         }
     }
 };
+
 
   const playerId = localStorage.getItem('userid');
 
@@ -295,7 +365,7 @@ export const UI = () => {
                     style={{ width: `${(40 / 100) * 100}%` }}
                   ></div> */}
                   <div className="absolute inset-0 flex justify-center items-center bg-yellow-400 text-black font-bold">
-                    40
+                    {gold}
                   </div>
                 </div>
 
@@ -316,7 +386,7 @@ export const UI = () => {
                     style={{ width: `${(40 / 100) * 100}%` }}
                   ></div> */}
                   <div className="absolute inset-0 flex justify-center items-center  bg-blue-400 text-black font-bold">
-                    40
+                  {diamond}
                   </div>
                 </div>
 
@@ -333,9 +403,10 @@ export const UI = () => {
               <div className="flex items-center space-x-2 relative">
                 <div className="relative w-52 h-6 bg-gray-200 rounded-md overflow-hidden">
 
-                  <div className="absolute inset-0 flex justify-center items-center bg-slate-400 text-black font-bold">
-                  0xa23....CE8
-                  </div>
+                <div className="absolute inset-0 flex justify-center items-center bg-slate-400 text-black font-bold">
+                  {walletAddress || "No wallet connected"}
+                </div>
+
                 </div>
 
                 <div
