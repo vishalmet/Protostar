@@ -427,7 +427,7 @@ export const UI = () => {
               {/* BOT */}
               {!buildMode && !shopMode && (
                 <button className="p-4 absolute -right-0 mr-1   rounded-full bg-slate-500 text-white drop-shadow-md  cursor-pointer hover:bg-slate-800 transition-colors">
-                  <Link to="/bot">
+                  <Link to="https://virtual-gf.vercel.app/">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       fill="none"
