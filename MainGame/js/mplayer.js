@@ -11,6 +11,9 @@ MOUSE.UP = 2;
 MOUSE.MOVE = 3;
 
 let isPopupShown = false;
+let isPopupBall = false;
+let isPopupRunner = false;
+let isPopupExtra = false;
 let isPopupStarkShoot = false;
 
 // Constructor()
@@ -149,6 +152,19 @@ Player.prototype.onMouseEvent = function( x, y, type, rmb ) {
             console.log("Click within material selector, block action prevented");
             return;
         }
+        if(Math.floor(this.pos.x) > 68 && Math.floor(this.pos.x) < 98 && Math.floor(this.pos.y) > 76 && Math.floor(this.pos.y) < 94){
+            console.log("Click within block action area, block action prevented");
+            return;
+        }
+        // if (Math.floor(this.pos.x) === 72 && Math.floor(this.pos.y)=== 89 && Math.floor(this.pos.z) === 16) {
+        //     return;
+        // }
+        // if (Math.floor(this.pos.x) === 94 && Math.floor(this.pos.y)=== 92 && Math.floor(this.pos.z) === 16) {
+        //     return;
+        // }
+        // if (Math.floor(this.pos.x) === 94 && Math.floor(this.pos.y)=== 79 && Math.floor(this.pos.z) === 16) {
+        //     return;
+        // }
     
         this.doBlockAction(x, y, !rmb);
         console.log("Working in condition");
@@ -174,10 +190,6 @@ Player.prototype.doBlockAction = function( x, y, destroy ) {
 
     if (block !== false) {
         var obj = this.client ? this.client : this.world;
-
-        // Check if player is allowed to place a block based on x-position
-        //if (this.pos.x <= 75) {
-        if (true) {
             if (destroy) {
                 obj.setBlock(block.x, block.y, block.z, BLOCK.AIR); // Destroy block
                 console.log("Block destroyed.");
@@ -196,9 +208,6 @@ Player.prototype.doBlockAction = function( x, y, destroy ) {
                 
                 console.log("Block placed at:", [placeX, placeY, placeZ], "Block count map:", this.blockCountMap);
             }
-        } else {
-            console.log("You cannot place blocks beyond x position 75.");
-        }
     }
 }
 
@@ -281,18 +290,51 @@ Player.prototype.update = function() {
         }
 
         // console.log("x :",this.pos.x,"y : ", this.pos.y, "z :", this.pos.z)
-
+        // console.log(Math.floor(this.pos.x), Math.floor(this.pos.y), Math.floor(this.pos.z))
+        
+            
         // Check if player's position meets the condition for popup
-        if (Math.floor(this.pos.x) === 88 && Math.floor(this.pos.y)=== 117 && Math.floor(this.pos.z) === 16) {
-            // Show the popup only once
+        if (Math.floor(this.pos.x) === 72 && Math.floor(this.pos.y)=== 79 && Math.floor(this.pos.z) === 16) {
             if (!isPopupStarkShoot) {
                 const iframePopup = document.getElementById('iframePopupStarkShoot');
                 iframePopup.style.display = 'block';
                 isPopupStarkShoot = true; 
             }
         } else {
-            // Reset the flag once the player leaves the area
             isPopupStarkShoot = false;
+        }
+
+        if (Math.floor(this.pos.x) === 72 && Math.floor(this.pos.y)=== 89 && Math.floor(this.pos.z) === 16) {
+            if (!isPopupBall) {
+                const iframePopup = document.getElementById('iframePopupBall');
+                iframePopup.style.display = 'block';
+                isPopupBall = true;
+            }
+        } else {
+            isPopupBall = false;
+        }
+
+        console.log("up of function", Math.floor(this.pos.x) === 94 && Math.floor(this.pos.y)=== 92 && Math.floor(this.pos.z) === 16)
+        if (Math.floor(this.pos.x) === 94 && Math.floor(this.pos.y)=== 92 && Math.floor(this.pos.z) === 16) {
+            console.log(isPopupRunner, isPopupRunner)
+            if (!isPopupRunner) {
+                console.log("opened...!ss")
+                const iframePopup1 = document.getElementById('iframePopupRunner');
+                iframePopup1.style.display = 'block';
+                isPopupRunner = true;
+            }
+        } else {
+            isPopupRunner = false;
+        }
+
+        if (Math.floor(this.pos.x) === 94 && Math.floor(this.pos.y)=== 79 && Math.floor(this.pos.z) === 16) {
+            if (!isPopupExtra) {
+                const iframePopup = document.getElementById('iframePopupExtra');
+                iframePopup.style.display = 'block';
+                isPopupExtra = true;
+            }
+        } else {
+            isPopupExtra = false;
         }
 
         // Resolve collisions

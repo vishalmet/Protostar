@@ -96,6 +96,24 @@
         <button id="closePopupIframeBtnStarkShoot">X</button>
         <iframe id="iframeContent" src="https://stark-shoot.vercel.app/lobby" width="100%" height="100%"></iframe>
     </div>
+    
+    <!-- Popup with iframe and close button of StarkShoot -->
+    <div id="iframePopupBall" class="hidden">
+        <button id="closePopupIframeBtnBall">X</button>
+        <iframe id="iframeContent" src="https://stark-shoot.vercel.app/lobby" width="100%" height="100%"></iframe>
+    </div>
+    
+    <!-- Popup with iframe and close button of StarkShoot -->
+    <div id="iframePopupRunner" class="hidden">
+        <button id="closePopupIframeBtnRunner">X</button>
+        <iframe id="iframeContent" src="https://stark-shoot.vercel.app/lobby" width="100%" height="100%"></iframe>
+    </div>
+
+    <!-- Popup with iframe and close button of StarkShoot -->
+    <div id="iframePopupExtra" class="hidden">
+        <button id="closePopupIframeBtnExtra">X</button>
+        <iframe id="iframeContent" src="https://stark-shoot.vercel.app/lobby" width="100%" height="100%"></iframe>
+    </div>
 
 
     <!-- Main code -->
@@ -475,6 +493,19 @@
             const iframePopup = document.getElementById('iframePopupStarkShoot');
             iframePopup.style.display = 'none';
         });
+        document.getElementById('closePopupIframeBtnBall').addEventListener('click', function() {
+            const iframePopup = document.getElementById('iframePopupBall');
+            iframePopup.style.display = 'none';
+        });
+        document.getElementById('closePopupIframeBtnRunner').addEventListener('click', function() {
+            const iframePopup = document.getElementById('iframePopupRunner');
+            iframePopup.style.display = 'none';
+        });
+        document.getElementById('closePopupIframeBtnExtra').addEventListener('click', function() {
+            const iframePopup = document.getElementById('iframePopupExtra');
+            iframePopup.style.display = 'none';
+        });
+        
         materialSelector.style.display = 'none';
         document.addEventListener('keydown', function(event) {
             if (event.key === 'q' || event.key === 'Q') {
